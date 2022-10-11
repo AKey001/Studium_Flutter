@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:studium/layouts/dashboard_layout.dart';
+import 'package:studium/layouts/modules_layout.dart';
 import 'package:studium/layouts/plan_layout.dart';
 
 class HomeLayout extends StatefulWidget {
@@ -11,7 +12,7 @@ class HomeLayout extends StatefulWidget {
 
 class _HomeLayoutState extends State<HomeLayout> {
   int _selectedIndex = 0;
-  static const List<Widget> _fragments = <Widget>[Plan(), Dashboard(), Dashboard()];
+  static const List<Widget> _fragments = <Widget>[Plan(), Dashboard(), Modules()];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -23,23 +24,23 @@ class _HomeLayoutState extends State<HomeLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _fragments.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.grey[900],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: <BottomNavigationBarItem>[
+      bottomNavigationBar: NavigationBar(
+        animationDuration: const Duration(milliseconds: 800),
+        onDestinationSelected: _onItemTapped,
+        selectedIndex: _selectedIndex,
+        destinations: <Widget>[
           buildBottomNavigationBarItem(Icons.home, 'Home'),
           buildBottomNavigationBarItem(Icons.dashboard, 'Dashboard'),
-          buildBottomNavigationBarItem(Icons.list, 'Module'),
+          buildBottomNavigationBarItem(Icons.list, 'Module')
         ],
       ),
     );
   }
 
-  BottomNavigationBarItem buildBottomNavigationBarItem(IconData icon, String label) {
-    return BottomNavigationBarItem(
-      icon: Icon(icon),
-      label: label,
+  Widget buildBottomNavigationBarItem(IconData icon, String label) {
+    return NavigationDestination(
+        icon: Icon(icon),
+        label: label
     );
   }
 }

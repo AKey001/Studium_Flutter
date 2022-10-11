@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:studium/theme/theme.dart';
 
-PreferredSizeWidget AppBarWidget(String title, {List<Widget> actions = const []}) {
+PreferredSizeWidget AppBarWidget(BuildContext context, String title, {List<Widget> actions = const []}) {
   return AppBar(
-      systemOverlayStyle: appbarTheme(),
-      backgroundColor: Colors.grey[900],
-      title: Text(title),
-      actions: actions
+    title: Text(title),
+    // scrolledUnderElevation: 0,
+    // backgroundColor: Colors.grey[900],
+    shadowColor: Theme.of(context).colorScheme.shadow,
+    actions: actions,
   );
 }
 

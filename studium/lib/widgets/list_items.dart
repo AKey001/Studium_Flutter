@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:studium/models/models.dart';
 
-Widget listTitleWidget(String title) {
+Widget listTitleWidget(String title, BuildContext context) {
   return Container(
     height: 45.0,
     padding: const EdgeInsets.only(
         left: 16.0,
         right: 16.0,
-        top: 18.0
+        top: 15.0
     ),
     child: Text(
       title,
-      style: const TextStyle(
-          fontSize: 20.0,
-          fontWeight: FontWeight.w400
-      ),
+      style: Theme.of(context).textTheme.headline5,
+      // style: const TextStyle(
+      //     fontSize: 20.0,
+      //     fontWeight: FontWeight.w400
+      // ),
     ),
   );
 }
@@ -27,23 +28,6 @@ Widget listTableEntryWidget(TableEntry tableEntry) {
     isThreeLine: true,
     leading: Text(tableEntry.time),
     trailing: Text(tableEntry.room),
-  );
-  return Container(
-      padding: const EdgeInsets.only(
-        left: 16.0,
-        top: 8.0,
-        bottom: 8.0,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(tableEntry.type),
-          Text(tableEntry.module),
-          Text(tableEntry.teacher),
-          Text(tableEntry.room),
-          Text(tableEntry.time),
-        ],
-      )
   );
 }
 

@@ -54,7 +54,7 @@ class _EntryListState extends State<EntryList> {
           if (snapshot.hasData) {
             return Stack(
               children: <Widget>[
-                _buildDefaultWidget(snapshot),
+                _buildDefaultWidget(snapshot, context),
                 Material(
                   color: const Color.fromRGBO(0, 0, 0, 0.5),
                   child: ProgressWidget(),
@@ -67,7 +67,7 @@ class _EntryListState extends State<EntryList> {
         }
         if (snapshot.hasData) {
           log("data already here");
-          return _buildDefaultWidget(snapshot);
+          return _buildDefaultWidget(snapshot, context);
         } else if (snapshot.hasError) {
           log('error: ${snapshot.error}');
           return ErrorWidget('${snapshot.error}');
@@ -80,9 +80,9 @@ class _EntryListState extends State<EntryList> {
   }
 }
 
-Widget _buildDefaultWidget(AsyncSnapshot<http.Response> snapshot) {
+Widget _buildDefaultWidget(AsyncSnapshot<http.Response> snapshot, BuildContext context) {
   String? html = snapshot.data!.body;
   PlanModel plan = mapRawHtml(html);
   List<Entry> entries = mapToEntries(plan);
-  return buildEntryListWidget(entries);
+  return buildEntryListWidget(entries, context);
 }
