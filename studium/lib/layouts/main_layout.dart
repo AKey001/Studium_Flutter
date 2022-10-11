@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:studium/layouts/fragments/fragments.dart';
+import 'package:studium/layouts/dashboard_layout.dart';
 import 'package:studium/layouts/plan_layout.dart';
 
 class HomeLayout extends StatefulWidget {
@@ -11,7 +11,7 @@ class HomeLayout extends StatefulWidget {
 
 class _HomeLayoutState extends State<HomeLayout> {
   int _selectedIndex = 0;
-  static const List<Widget> _fragments = <Widget>[Plan(), Dashboard(), Modules()];
+  static const List<Widget> _fragments = <Widget>[Plan(), Dashboard(), Dashboard()];
 
   void _onItemTapped(int index) {
     setState(() {

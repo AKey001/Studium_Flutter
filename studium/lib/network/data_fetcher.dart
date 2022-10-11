@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:studium/mapper/plan_mapper.dart';
 import 'package:studium/models/models.dart';
-import 'package:studium/widgets/list.dart';
-import 'package:week_of_year/week_of_year.dart';
-
+import 'package:studium/widgets/entry_list.dart';
 import 'package:studium/widgets/standard_widgets.dart';
+import 'package:week_of_year/week_of_year.dart';
 
 
 Future<http.Response> fetchData(int week) async {

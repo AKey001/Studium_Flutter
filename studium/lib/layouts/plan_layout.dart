@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:studium/network/data_fetcher.dart';
 import 'package:studium/widgets/standard_widgets.dart';
 
@@ -19,7 +18,6 @@ class _PlanState extends State<Plan> {
   // todo calendar popup -> + loading
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBarWidget(
           'Stundenplan',
@@ -28,11 +26,7 @@ class _PlanState extends State<Plan> {
             IconButton(onPressed: refresh, icon: const Icon(Icons.refresh))
           ]
       ),
-      body: const EntryList(),
+      body: EntryList(),
     );
   }
-
-
-  //
-
 }
