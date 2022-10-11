@@ -13,8 +13,8 @@ ThemeData appTheme() {
 
 ColorScheme _buildColorScheme(ThemeData base) {
   return base.colorScheme.copyWith(
-    surface: Colors.grey.shade900,
-    surfaceTint: Colors.black,
+    surface: const Color.fromRGBO(18, 18, 18, 1),
+    surfaceTint: Colors.grey.shade500,
     onSurface: Colors.white,
     onSurfaceVariant: Colors.grey.shade300,
     secondaryContainer: const Color(0xff1565c0),

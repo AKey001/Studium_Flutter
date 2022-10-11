@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 Widget buildDashboardWidget() {
   return ListView.builder(
-    itemCount: 4,
+    itemCount: 50,
     itemBuilder: (context, index) {
       return Container (
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4.0),
         child: Card(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: const <Widget>[
-              Text('Gesamturteil'),
+              Text('Gesamteturteil'),
               Text('vorläufig'),
               Text('1.024'),
             ],
