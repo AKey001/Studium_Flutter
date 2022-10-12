@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:studium/widgets/dashboard.dart';
 import 'package:studium/widgets/standard_widgets.dart';
 
 class Modules extends StatefulWidget {
@@ -18,11 +17,14 @@ class _ModulesState extends State<Modules> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(
-        context,
+      appBar: const AppBarWidget(
         'Module',
       ),
-      body: buildDashboardWidget(),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {},
+      ),
+      body: const Placeholder(),
     );
   }
 }

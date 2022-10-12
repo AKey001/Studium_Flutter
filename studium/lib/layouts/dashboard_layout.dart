@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:studium/widgets/dashboard.dart';
+import 'package:studium/widgets/dashboard/dashboard.dart';
 import 'package:studium/widgets/standard_widgets.dart';
 
 class Dashboard extends StatefulWidget {
@@ -17,12 +17,11 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       appBar: AppBarWidget(
-        context,
         'Dashboard',
       ),
-      body: buildDashboardWidget(),
+      body: DashboardListWidget(),
     );
   }
 }

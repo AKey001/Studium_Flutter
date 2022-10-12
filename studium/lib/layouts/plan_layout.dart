@@ -10,9 +10,9 @@ class Plan extends StatefulWidget {
 }
 
 class _PlanState extends State<Plan> {
-
-  void refresh() {
-    setState(() {});
+  void loadList() {
+    setState(() {
+    });
   }
 
   // todo calendar popup -> + loading
@@ -20,11 +20,10 @@ class _PlanState extends State<Plan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(
-          context,
           'Stundenplan',
           actions: <Widget>[
             IconButton(onPressed: (){}, icon: const Icon(Icons.calendar_month)),
-            IconButton(onPressed: refresh, icon: const Icon(Icons.refresh))
+            IconButton(onPressed: loadList, icon: const Icon(Icons.refresh))
           ]
       ),
       body: EntryList(),

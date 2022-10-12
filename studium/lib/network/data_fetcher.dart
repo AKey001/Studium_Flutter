@@ -52,37 +52,42 @@ class _EntryListState extends State<EntryList> {
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           if (snapshot.hasData) {
+            List<Entry> entries = htmlToList(snapshot);
+
             return Stack(
               children: <Widget>[
-                _buildDefaultWidget(snapshot, context),
-                Material(
-                  color: const Color.fromRGBO(0, 0, 0, 0.5),
+                EntryListWidget(entries),
+                const Material(
+                  color: Color.fromRGBO(0, 0, 0, 0.5),
                   child: ProgressWidget(),
                 )
               ],
             );
           } else {
-            return ProgressWidget();
+            return const ProgressWidget();
           }
         }
         if (snapshot.hasData) {
           log("data already here");
-          return _buildDefaultWidget(snapshot, context);
+          List<Entry> entries = htmlToList(snapshot);
+
+          return EntryListWidget(entries);
         } else if (snapshot.hasError) {
           log('error: ${snapshot.error}');
           return ErrorWidget('${snapshot.error}');
         } else {
           log("In Progress");
-          return ProgressWidget();
+          return const ProgressWidget();
         }
       },
     );
   }
+
+  List<Entry> htmlToList(AsyncSnapshot<http.Response> snapshot) {
+    String? html = snapshot.data!.body;
+    PlanModel plan = mapRawHtml(html);
+    List<Entry> entries = mapToEntries(plan);
+    return entries;
+  }
 }
 
-Widget _buildDefaultWidget(AsyncSnapshot<http.Response> snapshot, BuildContext context) {
-  String? html = snapshot.data!.body;
-  PlanModel plan = mapRawHtml(html);
-  List<Entry> entries = mapToEntries(plan);
-  return buildEntryListWidget(entries, context);
-}

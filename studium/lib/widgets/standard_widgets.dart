@@ -1,29 +1,33 @@
 import 'package:flutter/material.dart';
 
-PreferredSizeWidget AppBarWidget(BuildContext context, String title, {List<Widget> actions = const []}) {
-  return AppBar(
-    title: Text(title),
-    // scrolledUnderElevation: 0,
-    // backgroundColor: Colors.grey[900],
-    shadowColor: Theme.of(context).colorScheme.shadow,
-    actions: actions,
-  );
+class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
+  final String _title;
+  final List<Widget> actions;
+
+  const AppBarWidget(this._title, {this.actions = const [], super.key});
+
+  @override
+  PreferredSizeWidget build(BuildContext context) {
+    return AppBar(
+      title: Text(_title),
+      // scrolledUnderElevation: 0,
+      shadowColor: Theme.of(context).colorScheme.shadow,
+      actions: actions,
+    );
+  }
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => AppBar().preferredSize;
 }
 
-Widget ErrorTextWidget([String? msg]) {
-  return Center(
-    child: Text(
-      'Fehler: $msg',
-      style: const TextStyle(
-        color: Colors.red,
-        fontStyle: FontStyle.italic,
-      ),
-    ),
-  );
-}
+class ProgressWidget extends StatelessWidget {
+  const ProgressWidget({Key? key}) : super(key: key);
 
-Widget ProgressWidget() {
-  return const Center(
-    child: CircularProgressIndicator(),
-  );
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
+  }
 }
