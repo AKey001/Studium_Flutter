@@ -1,33 +1,54 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:studium/settings/settings_screen.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String _title;
   final List<Widget> btnActions;
   final List<PopupMenuEntry> popupActions;
+  final bool showSettingsItem;
 
-  const AppBarWidget(this._title, {this.btnActions = const [], this.popupActions = const [], super.key});
+  const AppBarWidget(this._title, {this.btnActions = const [], this.popupActions = const [], this.showSettingsItem = true, super.key});
 
   @override
   PreferredSizeWidget build(BuildContext context) {
     List<Widget> actions = [];
     actions.addAll(btnActions);
-    actions.add(
-      PopupMenuButton(
-          onSelected: (value) {
-            log('clicked $value');
-          },
-          itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-            ...popupActions,
-            const PopupMenuItem(
-              value: 1,
-              child: Text('Einstellungen'),
-            ),
-          ]),
-    );
+
+    List<PopupMenuEntry> allPopupActions = [];
+    allPopupActions.addAll(popupActions);
+    if (showSettingsItem) {
+      allPopupActions.add(
+        const PopupMenuItem(
+          value: 1,
+          child: Text('Einstellungen'),
+        ),
+      );
+    }
+
+    if (allPopupActions.isNotEmpty) {
+      actions.add(
+        PopupMenuButton(
+            onSelected: (value) {
+              log('clicked');
+              if (value == 1) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                );
+              }
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+              ...allPopupActions,
+            ]
+        ),
+      );
+    }
+
     return AppBar(
       title: Text(_title),
+      // elevation: 2,
       // scrolledUnderElevation: 0,
       shadowColor: Theme.of(context).colorScheme.shadow,
       actions: actions
@@ -36,6 +57,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => AppBar().preferredSize;
+
 }
 
 class ProgressWidget extends StatelessWidget {
