@@ -14,12 +14,12 @@ ThemeData appTheme() {
 ColorScheme _buildColorScheme(ThemeData base) {
   return base.colorScheme.copyWith(
     primary: const Color(0xff1565c0),
+    secondary: const Color(0xff90caf9),
     surface: const Color.fromRGBO(50, 50, 50, 1),
     surfaceTint: const Color.fromRGBO(21, 101, 192, 1.0),
     onSurface: Colors.white,
     onSurfaceVariant: Colors.grey.shade300,
     secondaryContainer: const Color(0xff1565c0),
-    tertiaryContainer: const Color(0xff90caf9),
     onSecondaryContainer: Colors.white,
   );
 }
