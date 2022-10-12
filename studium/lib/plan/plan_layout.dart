@@ -21,7 +21,7 @@ class _PlanState extends State<Plan> {
     return Scaffold(
       appBar: AppBarWidget(
           'Stundenplan',
-          actions: <Widget>[
+          btnActions: <Widget>[
             IconButton(onPressed: (){}, icon: const Icon(Icons.calendar_month)),
             IconButton(onPressed: loadList, icon: const Icon(Icons.refresh))
           ]

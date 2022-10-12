@@ -5,7 +5,7 @@ ThemeData appTheme() {
   ThemeData base = ThemeData.dark();
   return base.copyWith(
     useMaterial3: true,
-    scaffoldBackgroundColor: const Color.fromRGBO(18, 18, 18, 1),
+    scaffoldBackgroundColor: const Color.fromRGBO(50, 50, 50, 1.0),
     colorScheme: _buildColorScheme(base),
     textTheme: _buildTextTheme(base.textTheme),
   );
@@ -13,11 +13,13 @@ ThemeData appTheme() {
 
 ColorScheme _buildColorScheme(ThemeData base) {
   return base.colorScheme.copyWith(
-    surface: const Color.fromRGBO(18, 18, 18, 1),
-    surfaceTint: Colors.grey.shade500,
+    primary: const Color(0xff1565c0),
+    surface: const Color.fromRGBO(50, 50, 50, 1),
+    surfaceTint: const Color.fromRGBO(21, 101, 192, 1.0),
     onSurface: Colors.white,
     onSurfaceVariant: Colors.grey.shade300,
     secondaryContainer: const Color(0xff1565c0),
+    tertiaryContainer: const Color(0xff90caf9),
     onSecondaryContainer: Colors.white,
   );
 }
