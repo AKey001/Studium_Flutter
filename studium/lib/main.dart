@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:studium/theme/theme.dart';
 
-import 'plan/main_layout.dart';
+import 'main_layout.dart';
 
 void main() {
   runApp(const Main());
@@ -13,6 +13,7 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      restorationScopeId: 'root',
       theme: appTheme(),
       home: const HomeLayout(),
     );

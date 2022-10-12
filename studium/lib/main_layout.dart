@@ -4,30 +4,40 @@ import 'package:studium/plan/modules/modules_layout.dart';
 import 'package:studium/plan/plan_layout.dart';
 
 class HomeLayout extends StatefulWidget {
-  const HomeLayout({Key? key}) : super(key: key);
+  final String? restorationId = 'home';
+
+  const HomeLayout({super.key});
 
   @override
   State<HomeLayout> createState() => _HomeLayoutState();
+
 }
 
-class _HomeLayoutState extends State<HomeLayout> {
-  int _selectedIndex = 0;
+class _HomeLayoutState extends State<HomeLayout> with RestorationMixin {
+  final RestorableInt _selectedIndex = RestorableInt(0);
+
   static const List<Widget> _fragments = <Widget>[Plan(), Dashboard(), Modules()];
+
+  final RestorableInt i = RestorableInt(0);
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      _selectedIndex.value = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _fragments.elementAt(_selectedIndex),
+      // body: _fragments[_selectedIndex.value],
+      body: IndexedStack(
+       index: _selectedIndex.value,
+       children: _fragments,
+      ),
       bottomNavigationBar: NavigationBar(
         animationDuration: const Duration(milliseconds: 800),
         onDestinationSelected: _onItemTapped,
-        selectedIndex: _selectedIndex,
+        selectedIndex: _selectedIndex.value,
         destinations: <Widget>[
           buildBottomNavigationBarItem(Icons.home, 'Home'),
           buildBottomNavigationBarItem(Icons.dashboard, 'Dashboard'),
@@ -43,4 +53,13 @@ class _HomeLayoutState extends State<HomeLayout> {
         label: label
     );
   }
+
+  @override
+  String? get restorationId => widget.restorationId;
+
+  @override
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    registerForRestoration(_selectedIndex, 'nav_bar_index');
+  }
+
 }
