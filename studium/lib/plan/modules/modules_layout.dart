@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:studium/widgets/standard_widgets.dart';
+import 'package:studium/commons/widgets/standard_widgets.dart';
 
 class Modules extends StatefulWidget {
   const Modules({Key? key}) : super(key: key);

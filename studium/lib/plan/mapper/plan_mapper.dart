@@ -1,7 +1,7 @@
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as parser;
-import 'package:studium/mapper/datetime_mapper.dart';
-import 'package:studium/models/models.dart';
+import 'package:studium/plan/mapper/datetime_mapper.dart';
+import 'package:studium/plan/models/models.dart';
 
 PlanModel mapRawHtml(String html) {
   PlanModel plan = PlanModel();

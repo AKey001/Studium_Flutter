@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:studium/theme/theme.dart';
-import 'layouts/main_layout.dart';
+
+import 'plan/main_layout.dart';
 
 void main() {
   runApp(const Main());

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:studium/layouts/dashboard_layout.dart';
-import 'package:studium/layouts/modules_layout.dart';
-import 'package:studium/layouts/plan_layout.dart';
+import 'package:studium/dashboard/dashboard_screen.dart';
+import 'package:studium/plan/modules/modules_layout.dart';
+import 'package:studium/plan/plan_layout.dart';
 
 class HomeLayout extends StatefulWidget {
   const HomeLayout({Key? key}) : super(key: key);

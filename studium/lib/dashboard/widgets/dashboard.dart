@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:studium/widgets/dashboard/average_card.dart';
-import 'package:studium/widgets/dashboard/modules_card.dart';
-import 'package:studium/widgets/dashboard/progress_card.dart';
-import 'package:studium/widgets/dashboard/result_card.dart';
+import 'package:studium/dashboard/widgets/average_card.dart';
+import 'package:studium/dashboard/widgets/modules_card.dart';
+import 'package:studium/dashboard/widgets/progress_card.dart';
+import 'package:studium/dashboard/widgets/result_card.dart';
 
 
 class DashboardListWidget extends StatelessWidget {

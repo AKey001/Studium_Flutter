@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:studium/network/data_fetcher.dart';
-import 'package:studium/widgets/standard_widgets.dart';
+import 'package:studium/commons/widgets/standard_widgets.dart';
+import 'package:studium/plan/network/data_fetcher.dart';
 
 class Plan extends StatefulWidget {
   const Plan({Key? key}) : super(key: key);
