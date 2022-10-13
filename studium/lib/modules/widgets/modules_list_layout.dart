@@ -1,9 +1,8 @@
 
-import 'dart:developer';
-
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:studium/modules/models/models.dart';
+import 'package:studium/modules/widgets/add_modules_dialog.dart';
 
 
 class ModulesListWidget extends StatelessWidget {
@@ -37,7 +36,13 @@ class ModulesListWidget extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineSmall),
             trailing: Text(module.weighting.toString()),
             onTap: () {
-              log('clicked');
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => AddModuleDialog(),
+                  fullscreenDialog: true,
+                ),
+              );
             },
           );
         } else {

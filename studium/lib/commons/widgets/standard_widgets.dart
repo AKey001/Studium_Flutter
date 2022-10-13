@@ -70,3 +70,32 @@ class ProgressWidget extends StatelessWidget {
     );
   }
 }
+
+class TextFieldWidget extends StatelessWidget {
+  final String initalValue;
+  final String label;
+  IconData? icon;
+  String? errorText;
+
+  TextFieldWidget({super.key, required this.initalValue, required this.label, this.icon, this.errorText});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: TextFormField(
+        initialValue: initalValue,
+        decoration: InputDecoration(
+          labelText: label,
+          errorText: errorText,
+          border: const OutlineInputBorder(),
+          suffixIcon: Icon(
+            icon
+          ),
+          labelStyle: Theme.of(context).textTheme.bodySmall
+        ),
+      ),
+    );
+  }
+}
+
