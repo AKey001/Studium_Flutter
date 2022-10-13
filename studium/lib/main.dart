@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:studium/theme/color_schemes.dart';
 import 'package:studium/theme/theme.dart';
 
-import 'main_screen.dart';
+import 'main_layout.dart';
 
 void main() {
   runApp(Main());

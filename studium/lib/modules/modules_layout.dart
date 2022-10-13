@@ -1,5 +1,9 @@
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:studium/commons/widgets/standard_widgets.dart';
+import 'package:studium/modules/widgets/modules_list.dart';
 
 class Modules extends StatefulWidget {
   const Modules({Key? key}) : super(key: key);
@@ -9,22 +13,22 @@ class Modules extends StatefulWidget {
 }
 
 class _ModulesState extends State<Modules> {
-
-  void refresh() {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarWidget(
-        'Module',
+        'Module'
       ),
+      body: ModulesList(),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            log('clicked');
+          });
+        },
+        tooltip: 'Hinzufügen',
       ),
-      body: const Placeholder(),
     );
   }
 }

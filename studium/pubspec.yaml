@@ -41,6 +41,9 @@ dependencies:
   requests: ^4.7.0
   week_of_year: ^2.0.0
   fl_chart: ^0.55.2
+  sqflite: ^2.1.0+1
+  path: ^1.8.2
+  collection: ^1.16.0
 
 dev_dependencies:
   flutter_test:
