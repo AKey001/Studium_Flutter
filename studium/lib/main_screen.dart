@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:studium/dashboard/dashboard_screen.dart';
+import 'package:studium/dashboard/dashboard_layout.dart';
 import 'package:studium/plan/modules/modules_layout.dart';
 import 'package:studium/plan/plan_layout.dart';
 
