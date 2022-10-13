@@ -52,11 +52,12 @@ class _EntryListState extends State<EntryList> {
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           if (snapshot.hasData) {
-            List<Entry> entries = htmlToList(snapshot);
+            String? html = snapshot.data!.body;
+            List<Entry> entries = htmlToList(html);
 
             return Stack(
               children: <Widget>[
-                EntryListWidget(entries),
+                EntryListRefreshIndicatorIntegrated(initialEntries: entries),
                 const Material(
                   color: Color.fromRGBO(0, 0, 0, 0.5),
                   child: ProgressWidget(),
@@ -69,9 +70,10 @@ class _EntryListState extends State<EntryList> {
         }
         if (snapshot.hasData) {
           log("data already here");
-          List<Entry> entries = htmlToList(snapshot);
+          String? html = snapshot.data!.body;
+          List<Entry> entries = htmlToList(html);
 
-          return EntryListWidget(entries);
+          return EntryListRefreshIndicatorIntegrated(initialEntries: entries);
         } else if (snapshot.hasError) {
           log('error: ${snapshot.error}');
           return ErrorWidget('${snapshot.error}');
@@ -82,12 +84,50 @@ class _EntryListState extends State<EntryList> {
       },
     );
   }
-
-  List<Entry> htmlToList(AsyncSnapshot<http.Response> snapshot) {
-    String? html = snapshot.data!.body;
-    PlanModel plan = mapRawHtml(html);
-    List<Entry> entries = mapToEntries(plan);
-    return entries;
-  }
 }
 
+// ==========
+
+class EntryListRefreshIndicatorIntegrated extends StatefulWidget {
+  final List<Entry>? initialEntries;
+
+  const EntryListRefreshIndicatorIntegrated({super.key, this.initialEntries = const []});
+
+  @override
+  State<EntryListRefreshIndicatorIntegrated> createState() => _EntryListRefreshIndicatorIntegratedState();
+}
+
+class _EntryListRefreshIndicatorIntegratedState extends State<EntryListRefreshIndicatorIntegrated> {
+  final int _week = DateTime.now().weekOfYear;
+  List<Entry> entries = [];
+
+  @override
+  void initState() {
+    entries = widget.initialEntries ?? [];
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RefreshIndicator(
+      child: EntryListWidget(entries),
+      onRefresh: () async {
+        http.Response response = await fetchData(_week);
+        setState(() {
+          String html = response.body;
+          entries = htmlToList(html);
+        });
+      },
+    );
+  }
+
+
+
+}
+
+
+List<Entry> htmlToList(String html) {
+  PlanModel plan = mapRawHtml(html);
+  List<Entry> entries = mapToEntries(plan);
+  return entries;
+}
