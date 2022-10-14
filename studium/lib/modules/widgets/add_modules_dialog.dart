@@ -17,6 +17,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
   final TextEditingController semesterController = TextEditingController();
   final TextEditingController gradeController = TextEditingController();
   final TextEditingController weightingController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -37,16 +38,18 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
             padding: const EdgeInsets.only(right: 16),
             child: TextButton(
                 onPressed: () async {
-                  print(gradeController.value.text);
-                  Module module = Module(
-                      name: moduleController.value.text,
+                  if (_formKey.currentState!.validate()) {
+                    print(gradeController.value.text);
+                    Module module = Module(
+                      name: moduleController.value.text.trim(),
                       grade: gradeController.value.text != '' ? double.parse(gradeController.value.text) : null,
-                      weighting: int.parse(weightingController.value.text),
-                      semester: int.parse(semesterController.value.text),
-                  );
-                  log(module.toString());
-                  await AppDatabase.insertModule(module);
-                  Navigator.pop(context);
+                      weighting: int.parse(weightingController.value.text.trim()),
+                      semester: int.parse(semesterController.value.text.trim()),
+                    );
+                    log(module.toString());
+                    await AppDatabase.insertModule(module);
+                    Navigator.pop(context);
+                  }
                 },
                 child: const Text('Speichern')
             ),
@@ -54,45 +57,88 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
         ],
       ),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          // mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            TextFieldWidget(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              TextFieldWidget(
                 initalValue: '',
                 label: 'Modul',
-                controller: moduleController),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: TextFieldWidget(
-                    initalValue: '1',
-                    label: 'Semester',
-                    controller: semesterController,
+                controller: moduleController,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Bitte ausfüllen';
+                  }
+                  return null;
+                },
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: TextFieldWidget(
+                      initalValue: '',
+                      label: 'Semester',
+                      controller: semesterController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Bitte ausfüllen';
+                        }
+                        int? testedAsInt = int.tryParse(value);
+                        if (testedAsInt == null || testedAsInt < 1 || testedAsInt > 30) {
+                          return 'Ungültiges Semester';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: TextFieldWidget(
-                    initalValue: '',
-                    label: 'Note',
-                    controller: gradeController,
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: TextFieldWidget(
+                      initalValue: '',
+                      label: 'Wichtung',
+                      controller: weightingController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Bitte ausfüllen';
+                        }
+                        int? testedAsInt = int.tryParse(value);
+                        if (testedAsInt == null || testedAsInt < 0) {
+                          return 'Ungültige Wichtung';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: TextFieldWidget(
-                    initalValue: '5',
-                    label: 'Wichtung',
-                    controller: weightingController,
+                ],
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: TextFieldWidget(
+                      initalValue: '',
+                      label: 'Note',
+                      controller: gradeController,
+                      validator: (value) {
+                        if (value != null && value.isNotEmpty){
+                          double? testedAsDouble = double.tryParse(value);
+                          if (testedAsDouble == null || testedAsDouble.toString().length > 3 || testedAsDouble > 5 || testedAsDouble < 1) {
+                            return 'Ungültige Note';
+                          }
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

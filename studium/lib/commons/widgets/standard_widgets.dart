@@ -75,11 +75,10 @@ class TextFieldWidget extends StatelessWidget {
   final String initalValue;
   final String label;
   IconData? icon;
-  String? errorText;
-  Function()? onEditingComplete;
   TextEditingController? controller;
+  String? Function(String?)? validator;
 
-  TextFieldWidget({super.key, required this.initalValue, required this.label, this.icon, this.errorText, this.onEditingComplete, this.controller});
+  TextFieldWidget({super.key, required this.initalValue, required this.label, this.icon, this.validator, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -91,15 +90,15 @@ class TextFieldWidget extends StatelessWidget {
         initialValue: null,
         decoration: InputDecoration(
           labelText: label,
-          errorText: errorText,
           border: const OutlineInputBorder(),
           suffixIcon: Icon(
             icon
           ),
           labelStyle: Theme.of(context).textTheme.bodySmall,
         ),
-        onEditingComplete: onEditingComplete,
         controller: controller,
+        validator: validator,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
       ),
     );
   }

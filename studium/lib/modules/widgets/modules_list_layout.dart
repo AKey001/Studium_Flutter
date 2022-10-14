@@ -1,10 +1,8 @@
-
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:studium/commons/db/database.dart';
 import 'package:studium/modules/models/models.dart';
 import 'package:studium/modules/widgets/update_module_dialog.dart';
-
 
 class ModulesListWidget extends StatefulWidget {
   List<Module> modules;
@@ -30,12 +28,15 @@ class _ModulesListWidgetState extends State<ModulesListWidget> {
 
         if (entries[index] is Module) {
           Module module = entries[index];
+          String grade = '';
+          module.grade == null ? grade = '-.-' : grade = module.grade.toString();
+
           return ListTile(
             title: Text(
               module.name,
             ),
             leading: Text(
-                module.grade.toString(),
+                grade,
                 style: Theme.of(context).textTheme.headlineSmall),
             trailing: Text(module.weighting.toString()),
             onTap: () {

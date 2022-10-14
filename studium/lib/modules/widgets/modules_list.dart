@@ -8,9 +8,7 @@ import 'package:studium/modules/models/models.dart';
 import 'package:studium/modules/widgets/modules_list_layout.dart';
 
 class ModulesList extends StatefulWidget {
-  Function? showDeleteDialog;
-
-  ModulesList({Key? key, this.showDeleteDialog}) : super(key: key);
+  ModulesList({Key? key}) : super(key: key);
 
   @override
   State<ModulesList> createState() => _ModulesListState();

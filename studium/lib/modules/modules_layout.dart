@@ -16,15 +16,13 @@ class Modules extends StatefulWidget {
 
 class _ModulesState extends State<Modules> {
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarWidget(
         'Module'
       ),
-      body: ModulesList(showDeleteDialog: (){},),
+      body: ModulesList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
