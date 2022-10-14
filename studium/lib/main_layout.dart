@@ -16,7 +16,7 @@ class HomeLayout extends StatefulWidget {
 class _HomeLayoutState extends State<HomeLayout> with RestorationMixin {
   final RestorableInt _selectedIndex = RestorableInt(0);
 
-  static const List<Widget> _fragments = <Widget>[Plan(), Dashboard(), Modules()];
+  static List<Widget> _fragments = <Widget>[const Plan(), new Dashboard(), new Modules()];
 
   final RestorableInt i = RestorableInt(0);
 

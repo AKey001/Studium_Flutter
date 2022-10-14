@@ -4,7 +4,7 @@ import 'package:studium/modules/models/models.dart';
 
 class AppDatabase {
 
-  Future<Database> init() async {
+  static Future<Database> _init() async {
     String dbPath = join(await getDatabasesPath(), "ResultCalculator");
     return openDatabase(dbPath,
         onCreate: (db, version) {
@@ -15,14 +15,14 @@ class AppDatabase {
         version: 4);
   }
 
-  void insert(Module module, Database db) async {
+  static void _insert(Module module, Database db) async {
     await db.insert(
         'Module',
         module.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  Future<List<Module>> modules(Database db) async {
+  static Future<List<Module>> _modules(Database db) async {
     // Query the table for all The Dogs.
     final List<Map<String, dynamic>> maps = await db.query('Module', orderBy: 'semester, name');
 
@@ -38,5 +38,14 @@ class AppDatabase {
     });
   }
 
+  static Future<List<Module>> loadAllModules() async {
+    Database db = await _init();
+    return await _modules(db);
+  }
+
+  static Future<void> insertModule(Module module) async {
+    Database db = await _init();
+    _insert(module, db);
+  }
 
 }
