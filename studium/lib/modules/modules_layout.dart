@@ -1,8 +1,7 @@
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:studium/commons/widgets/standard_widgets.dart';
+import 'package:studium/modules/widgets/add_modules_dialog.dart';
 import 'package:studium/modules/widgets/modules_list.dart';
 
 class Modules extends StatefulWidget {
@@ -21,13 +20,17 @@ class _ModulesState extends State<Modules> {
       ),
       body: ModulesList(),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
         onPressed: () {
-          setState(() {
-            log('clicked');
-          });
+          Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => const AddModuleDialog(),
+              fullscreenDialog: true,
+            ),
+          );
         },
         tooltip: 'Hinzufügen',
+        child: const Icon(Icons.add),
       ),
     );
   }
