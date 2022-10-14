@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ErrorWidget;
 import 'package:http/http.dart' as http;
 import 'package:studium/commons/network/data_fetcher.dart';
 import 'package:studium/commons/widgets/standard_widgets.dart';
@@ -54,7 +54,7 @@ class _EntryListState extends State<EntryList> {
           return EntryListRefreshIndicatorIntegrated(initialEntries: entries);
         } else if (snapshot.hasError) {
           log('error: ${snapshot.error}');
-          return ErrorWidget('${snapshot.error}');
+          return ErrorWidget(error: '${snapshot.error}');
         } else {
           log("In Progress");
           return const ProgressWidget();

@@ -75,27 +75,51 @@ class TextFieldWidget extends StatelessWidget {
   final String initalValue;
   final String label;
   IconData? icon;
-  String? errorText;
+  TextEditingController? controller;
+  String? Function(String?)? validator;
 
-  TextFieldWidget({super.key, required this.initalValue, required this.label, this.icon, this.errorText});
+  TextFieldWidget({super.key, required this.initalValue, required this.label, this.icon, this.validator, this.controller});
 
   @override
   Widget build(BuildContext context) {
+    controller == null ? controller = TextEditingController() : null;
+    controller?.value =  TextEditingValue(text: initalValue);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: TextFormField(
-        initialValue: initalValue,
+        initialValue: null,
         decoration: InputDecoration(
           labelText: label,
-          errorText: errorText,
           border: const OutlineInputBorder(),
           suffixIcon: Icon(
             icon
           ),
-          labelStyle: Theme.of(context).textTheme.bodySmall
+          labelStyle: Theme.of(context).textTheme.bodySmall,
         ),
+        controller: controller,
+        validator: validator,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
       ),
     );
   }
 }
 
+class ErrorWidget extends StatelessWidget {
+  final String error;
+
+  const ErrorWidget({Key? key, required this.error}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(padding: EdgeInsets.all(24),
+        child: Text(
+          error,
+          style: TextStyle(
+            color:  Theme.of(context).colorScheme.error,
+          ),
+        ),
+      ),
+    );
+  }
+}

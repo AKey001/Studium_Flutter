@@ -2,7 +2,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-LineTouchData buildTooltip(BuildContext context, List<FlSpot> result, List<FlSpot> average) {
+LineTouchData buildTooltip(BuildContext context, List<FlSpot> result, List<FlSpot> average, Color color1, Color color2) {
   return LineTouchData(
       enabled: true,
       touchTooltipData: LineTouchTooltipData(
@@ -17,7 +17,7 @@ LineTouchData buildTooltip(BuildContext context, List<FlSpot> result, List<FlSpo
               const textStyle = TextStyle();
 
               List<FlSpot> spots = [];
-              touchedSpot.bar.color == Theme.of(context).colorScheme.primary ? spots = result : spots = average;
+              touchedSpot.bar.color == color2? spots = result : spots = average;
               return LineTooltipItem(
                 spots[touchedSpot.spotIndex].y.toString().substring(0,3),
                 Theme.of(context).textTheme.labelSmall ?? textStyle,

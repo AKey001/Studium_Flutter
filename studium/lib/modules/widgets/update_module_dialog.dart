@@ -1,18 +1,18 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:studium/commons/db/database.dart';
 import 'package:studium/commons/widgets/standard_widgets.dart';
 import 'package:studium/modules/models/models.dart';
 
-class AddModuleDialog extends StatefulWidget {
-  const AddModuleDialog({super.key});
+class UpdateModuleDialog extends StatefulWidget {
+  Module module;
+  
+  UpdateModuleDialog({super.key, required this.module});
 
   @override
-  State<AddModuleDialog> createState() => _AddModuleDialogState();
+  State<UpdateModuleDialog> createState() => _UpdateModuleDialogState();
 }
 
-class _AddModuleDialogState extends State<AddModuleDialog> {
+class _UpdateModuleDialogState extends State<UpdateModuleDialog> {
   final TextEditingController moduleController = TextEditingController();
   final TextEditingController semesterController = TextEditingController();
   final TextEditingController gradeController = TextEditingController();
@@ -32,22 +32,19 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Neues Modul'),
+        title: const Text('Modul bearbeiten'),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: TextButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    print(gradeController.value.text);
-                    Module module = Module(
-                      name: moduleController.value.text.trim(),
-                      grade: gradeController.value.text != '' ? double.parse(gradeController.value.text) : null,
-                      weighting: int.parse(weightingController.value.text.trim()),
-                      semester: int.parse(semesterController.value.text.trim()),
-                    );
-                    log(module.toString());
-                    await AppDatabase.insertModule(module);
+                    widget.module.name = moduleController.value.text;
+                    widget.module.grade = double.parse(gradeController.value.text);
+                    widget.module.weighting = int.parse(weightingController.value.text);
+                    widget.module.semester = int.parse(semesterController.value.text);
+
+                    await AppDatabase.updateModule(widget.module);
                     Navigator.pop(context);
                   }
                 },
@@ -64,7 +61,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               TextFieldWidget(
-                initalValue: '',
+                initalValue: widget.module.name,
                 label: 'Modul',
                 controller: moduleController,
                 validator: (value) {
@@ -80,7 +77,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
                 children: [
                   Expanded(
                     child: TextFieldWidget(
-                      initalValue: '',
+                      initalValue: widget.module.semester.toString(),
                       label: 'Semester',
                       controller: semesterController,
                       validator: (value) {
@@ -98,7 +95,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: TextFieldWidget(
-                      initalValue: '',
+                      initalValue: widget.module.weighting.toString(),
                       label: 'Wichtung',
                       controller: weightingController,
                       validator: (value) {
@@ -115,32 +112,32 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
                   ),
                 ],
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: TextFieldWidget(
-                      initalValue: '',
-                      label: 'Note',
-                      controller: gradeController,
-                      validator: (value) {
-                        if (value != null && value.isNotEmpty){
-                          double? testedAsDouble = double.tryParse(value);
-                          if (testedAsDouble == null || testedAsDouble.toString().length > 3 || testedAsDouble > 5 || testedAsDouble < 1) {
-                            return 'Ungültige Note';
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: TextFieldWidget(
+                        initalValue: widget.module.grade.toString(),
+                        label: 'Note',
+                        controller: gradeController,
+                        validator: (value) {
+                          if (value != null && value.isNotEmpty){
+                            double? testedAsDouble = double.tryParse(value);
+                            if (testedAsDouble == null || testedAsDouble.toString().length > 3 || testedAsDouble > 5 || testedAsDouble < 1) {
+                              return 'Ungültige Note';
+                            }
                           }
-                        }
-                        return null;
-                      },
+                          return null;
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ]
+                ),
+              ],
+            ),
           ),
         ),
-      ),
     );
   }
 }

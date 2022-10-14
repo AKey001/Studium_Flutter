@@ -11,15 +11,15 @@ abstract class ModuleEntry {
 class Module {
   final int? id;
 
-  final String name;
+  String name;
 
-  final num grade;
+  num? grade;
 
-  final int weighting;
+  int weighting;
 
-  final int semester;
+  int semester;
 
-  const Module(
+  Module(
       {required this.name, required this.grade, required this.weighting, required this.semester, this.id});
 
   Map<String, dynamic> toMap() {
