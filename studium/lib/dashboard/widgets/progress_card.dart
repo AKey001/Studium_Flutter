@@ -1,11 +1,16 @@
+import 'package:collection/collection.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ErrorWidget;
+import 'package:studium/commons/db/database.dart';
+import 'package:studium/commons/widgets/standard_widgets.dart';
 import 'package:studium/dashboard/chart/methods/reverse_mapper.dart';
 import 'package:studium/dashboard/chart/models/axis_titles.dart';
 import 'package:studium/dashboard/chart/models/border.dart';
 import 'package:studium/dashboard/chart/models/grid.dart';
 import 'package:studium/dashboard/chart/models/lines.dart';
 import 'package:studium/dashboard/chart/models/tooltip.dart';
+import 'package:studium/dashboard/mapper/result_calculator.dart';
+import 'package:studium/modules/models/models.dart';
 import 'package:studium/theme/custom_color.g.dart';
 
 
@@ -15,8 +20,8 @@ class ProgressCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color1 = Theme.of(context).extension<CustomColors>()!.chartbrown ?? Colors.brown;
-    Color color2 = Theme.of(context).colorScheme.primary;
+    final Color color1 = Theme.of(context).extension<CustomColors>()!.chartbrown ?? Colors.brown;
+    final Color color2 = Theme.of(context).colorScheme.primary;
 
     return Card(
       child: Column(
@@ -43,28 +48,47 @@ class ProgressCardWidget extends StatelessWidget {
                ],
               ),
             ),
-            Chart(
-              average: const [
-                FlSpot(1, 3.2),
-                FlSpot(2, 3.1),
-                FlSpot(3, 2.4),
-                FlSpot(4, 3.0),
-                FlSpot(5, 2),
-                FlSpot(6, 1.8),
-              ],
-              color1: color1,
-              result: const [
-                FlSpot(1, 1.2),
-                FlSpot(2, 1.0),
-                FlSpot(3, 1.8),
-                FlSpot(4, 2.0),
-                FlSpot(5, 2.0),
-                FlSpot(6, 3.89),
-              ],
-              color2: color2,
-            ),
-        ]
+            chart(color1, color2),
+        ],
       ),
+    );
+  }
+  Widget chart(Color color1, Color color2) {
+    return FutureBuilder<List<Module>>(
+      future: AppDatabase.loadAllModules(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List<Module> modules = snapshot.data ?? [];
+          Map<int, List<Module>> grouped = groupBy(modules, (module) => module.semester);
+
+          List<FlSpot> average = [];
+          List<FlSpot> result = [];
+          for (int i in grouped.keys) {
+            average.add(FlSpot(i.toDouble(), double.parse(calculateAverage(grouped[i] ?? []))));
+            result.add(FlSpot(i.toDouble(), double.parse(calculateResult(grouped[i] ?? []).substring(0, 3))));
+          }
+
+          return Chart(
+            average: average,
+            color1: color1,
+            result: result,
+            color2: color2,
+          );
+        } else if (snapshot.hasError) {
+          return ErrorWidget(error: '${snapshot.error}');
+        } else {
+          return Chart(
+            average: const [
+              FlSpot(1, 1),
+            ],
+            color1: color1,
+            result: const [
+              FlSpot(1, 1),
+            ],
+            color2: color2,
+          );
+        }
+      },
     );
   }
 }

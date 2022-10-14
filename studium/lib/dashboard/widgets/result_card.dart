@@ -70,7 +70,7 @@ class ResultCardWidget extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline3,
               )
             ],
-          );;
+          );
         }
       },
     );

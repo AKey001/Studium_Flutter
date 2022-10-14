@@ -93,7 +93,7 @@ class _ModulesListWidgetState extends State<ModulesListWidget> {
 
   List processModules(List<Module> modules) {
     List processed = [];
-    Map<int, List<Module>> grouped = groupBy(modules, (p0) => p0.semester);
+    Map<int, List<Module>> grouped = groupBy(modules, (module) => module.semester);
 
     for (int i in grouped.keys) {
       processed.add(i);

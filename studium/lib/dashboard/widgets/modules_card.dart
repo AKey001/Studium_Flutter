@@ -46,7 +46,7 @@ class ModulesCardWidget extends StatelessWidget {
                   _buildDataCell("Benotet", '0'),
                   _buildDataCell("Gewichtet", '0'),
                 ],
-              );;
+              );
               }
             },
           )
