@@ -1,18 +1,18 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:studium/commons/db/database.dart';
 import 'package:studium/commons/widgets/standard_widgets.dart';
 import 'package:studium/modules/models/models.dart';
 
-class AddModuleDialog extends StatefulWidget {
-  const AddModuleDialog({super.key});
+class UpdateModuleDialog extends StatefulWidget {
+  Module module;
+  
+  UpdateModuleDialog({super.key, required this.module});
 
   @override
-  State<AddModuleDialog> createState() => _AddModuleDialogState();
+  State<UpdateModuleDialog> createState() => _UpdateModuleDialogState();
 }
 
-class _AddModuleDialogState extends State<AddModuleDialog> {
+class _UpdateModuleDialogState extends State<UpdateModuleDialog> {
   final TextEditingController moduleController = TextEditingController();
   final TextEditingController semesterController = TextEditingController();
   final TextEditingController gradeController = TextEditingController();
@@ -31,21 +31,18 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Neues Modul'),
+        title: const Text('Modul bearbeiten'),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: TextButton(
                 onPressed: () async {
-                  print(gradeController.value.text);
-                  Module module = Module(
-                      name: moduleController.value.text,
-                      grade: gradeController.value.text != '' ? double.parse(gradeController.value.text) : null,
-                      weighting: int.parse(weightingController.value.text),
-                      semester: int.parse(semesterController.value.text),
-                  );
-                  log(module.toString());
-                  await AppDatabase.insertModule(module);
+                  widget.module.name = moduleController.value.text;
+                  widget.module.grade = double.parse(gradeController.value.text);
+                  widget.module.weighting = int.parse(weightingController.value.text);
+                  widget.module.semester = int.parse(semesterController.value.text);
+
+                  await AppDatabase.updateModule(widget.module);
                   Navigator.pop(context);
                 },
                 child: const Text('Speichern')
@@ -60,7 +57,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextFieldWidget(
-                initalValue: '',
+                initalValue: widget.module.name,
                 label: 'Modul',
                 controller: moduleController),
             Row(
@@ -69,7 +66,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
               children: [
                 Expanded(
                   child: TextFieldWidget(
-                    initalValue: '1',
+                    initalValue: widget.module.semester.toString(),
                     label: 'Semester',
                     controller: semesterController,
                   ),
@@ -77,7 +74,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: TextFieldWidget(
-                    initalValue: '',
+                    initalValue: widget.module.grade.toString(),
                     label: 'Note',
                     controller: gradeController,
                   ),
@@ -85,7 +82,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: TextFieldWidget(
-                    initalValue: '5',
+                    initalValue: widget.module.weighting.toString(),
                     label: 'Wichtung',
                     controller: weightingController,
                   ),

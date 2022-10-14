@@ -38,6 +38,23 @@ class AppDatabase {
     });
   }
 
+  static Future<void> _update(Module module, Database db) async {
+    await db.update(
+      'Module',
+      module.toMap(),
+      where: 'id = ?',
+      whereArgs: [module.id],
+    );
+  }
+
+  static Future<void> _delete(Module module, Database db) async {
+    await db.delete(
+      'Module',
+      where: 'id = ?',
+      whereArgs: [module.id],
+    );
+  }
+
   static Future<List<Module>> loadAllModules() async {
     Database db = await _init();
     return await _modules(db);
@@ -46,6 +63,16 @@ class AppDatabase {
   static Future<void> insertModule(Module module) async {
     Database db = await _init();
     _insert(module, db);
+  }
+
+  static Future<void> updateModule(Module module) async {
+    Database db = await _init();
+    _update(module, db);
+  }
+
+  static Future<void> deleteModule(Module module) async {
+    Database db = await _init();
+    _delete(module, db);
   }
 
 }

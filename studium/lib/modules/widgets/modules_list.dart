@@ -8,7 +8,9 @@ import 'package:studium/modules/models/models.dart';
 import 'package:studium/modules/widgets/modules_list_layout.dart';
 
 class ModulesList extends StatefulWidget {
-  const ModulesList({Key? key}) : super(key: key);
+  Function? showDeleteDialog;
+
+  ModulesList({Key? key, this.showDeleteDialog}) : super(key: key);
 
   @override
   State<ModulesList> createState() => _ModulesListState();
@@ -32,7 +34,7 @@ class _ModulesListState extends State<ModulesList> {
           }
         } else if (snapshot.hasError) {
           log('error: ${snapshot.error}');
-          return ErrorWidget(error: '${snapshot.error}',);
+          return ErrorWidget(error: '${snapshot.error}');
         } else {
           log("db in Progress");
           return const ProgressWidget();
@@ -40,10 +42,4 @@ class _ModulesListState extends State<ModulesList> {
       },
     );
   }
-
-
 }
-
-
-
-

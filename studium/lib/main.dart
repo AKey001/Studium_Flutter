@@ -1,5 +1,7 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:studium/theme/color_schemes.dart';
+import 'package:studium/theme/custom_color.g.dart';
 import 'package:studium/theme/theme.dart';
 
 import 'main_layout.dart';
@@ -11,23 +13,51 @@ void main() {
 class Main extends StatelessWidget {
   Main({Key? key}) : super(key: key);
 
-  ThemeData lightTheme = ThemeData(useMaterial3: true, colorScheme: lightColorScheme);
-  ThemeData darkTheme = ThemeData(useMaterial3: true, colorScheme: darkColorScheme);
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      restorationScopeId: 'root',
-      // theme: appTheme(),
-      theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme).copyWith(
-        textTheme: buildTextTheme(lightTheme.textTheme),
-      ),
-      darkTheme: darkTheme.copyWith(
-        scaffoldBackgroundColor: const Color(0xFF1A1B1E),
-        textTheme: buildTextTheme(darkTheme.textTheme),
-      ),
-      home: const HomeLayout(),
+    return DynamicColorBuilder(
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        ColorScheme lightScheme;
+        ColorScheme darkScheme;
+
+        if (lightDynamic != null && darkDynamic != null) {
+          lightScheme = lightDynamic.harmonized();
+          lightCustomColors = lightCustomColors.harmonized(lightScheme);
+
+          // Repeat for the dark color scheme.
+          darkScheme = darkDynamic.harmonized();
+          darkCustomColors = darkCustomColors.harmonized(darkScheme);
+        } else {
+          // Otherwise, use fallback schemes.
+          lightScheme = lightColorScheme;
+          darkScheme = darkColorScheme;
+        }
+
+        ThemeData lightThemedata = ThemeData(
+          useMaterial3: true,
+          colorScheme: lightScheme,
+          extensions: [lightCustomColors],
+        );
+        ThemeData darkThemedata = ThemeData(
+          useMaterial3: true,
+          colorScheme: darkScheme,
+          extensions: [darkCustomColors],
+        );
+
+        return MaterialApp(
+          theme: lightThemedata.copyWith(
+            textTheme: buildTextTheme(lightThemedata.textTheme),
+          ),
+          darkTheme: darkThemedata.copyWith(
+            textTheme: buildTextTheme(darkThemedata.textTheme),
+            scaffoldBackgroundColor: darkThemedata.colorScheme.background,
+          ),
+          home: const HomeLayout(),
+        );
+      },
     );
   }
 }
+
+
 

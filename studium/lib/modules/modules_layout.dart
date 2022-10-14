@@ -24,7 +24,7 @@ class _ModulesState extends State<Modules> {
       appBar: const AppBarWidget(
         'Module'
       ),
-      body: ModulesList(),
+      body: ModulesList(showDeleteDialog: (){},),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(

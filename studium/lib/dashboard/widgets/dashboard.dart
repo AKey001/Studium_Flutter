@@ -10,13 +10,20 @@ class DashboardListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: const <Widget>[
-        ResultCardWidget(),
-        AverageCardWidget(),
-        ModulesCardWidget(),
-        ProgressCardWidget()
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: ListView(
+        padding: const EdgeInsets.only(bottom: 12, top: 8),
+        children: const <Widget>[
+          ResultCardWidget(),
+          SizedBox(height: 4),
+          AverageCardWidget(),
+          SizedBox(height: 4),
+          ModulesCardWidget(),
+          SizedBox(height: 4),
+          ProgressCardWidget(),
+        ],
+      ),
     );
   }
 }
