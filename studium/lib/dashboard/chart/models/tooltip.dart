@@ -16,10 +16,10 @@ LineTouchData buildTooltip(BuildContext context, List<FlSpot> result, List<FlSpo
                 (LineBarSpot touchedSpot) {
               const textStyle = TextStyle();
 
-              List<FlSpot> spots = [];
-              touchedSpot.bar.color == color2? spots = result : spots = average;
+              String tooltip;
+              touchedSpot.bar.color == color2? tooltip = '${result[touchedSpot.spotIndex].y.toStringAsFixed(1)}' : tooltip = '${average[touchedSpot.spotIndex].y.toStringAsFixed(2)}';
               return LineTooltipItem(
-                spots[touchedSpot.spotIndex].y.toString().substring(0,3),
+                tooltip,
                 Theme.of(context).textTheme.labelSmall ?? textStyle,
               );
             },

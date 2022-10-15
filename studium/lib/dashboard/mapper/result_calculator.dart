@@ -1,8 +1,9 @@
 import 'package:studium/modules/models/models.dart';
 
-String calculateAverage(List<Module> modules) {
+double? calculateAverage(List<Module> modules) {
   if (modules.isNotEmpty) {
     int count = modules.where((element) => element.grade != null).length;
+    print('COUNT: $count');
     double sum = 0;
     for (Module module in modules) {
       num grade = module.grade ?? 0;
@@ -10,8 +11,16 @@ String calculateAverage(List<Module> modules) {
         sum += grade;
       }
     }
-    double average = sum/count;
+    return sum/count;
+  } else {
+    return null;
+  }
+}
 
+String calculateAverageString(List<Module> modules) {
+  double? average = calculateAverage(modules);
+
+  if (average != null) {
     return average.toStringAsFixed(2);
   } else {
     return '-.-';

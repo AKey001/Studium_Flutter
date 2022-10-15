@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:studium/commons/db/database.dart';
+import 'package:provider/provider.dart';
+import 'package:studium/commons/providers/modules_list_provider.dart';
 import 'package:studium/commons/widgets/standard_widgets.dart';
 import 'package:studium/modules/models/models.dart';
 
@@ -44,7 +45,7 @@ class _UpdateModuleDialogState extends State<UpdateModuleDialog> {
                     widget.module.weighting = int.parse(weightingController.value.text);
                     widget.module.semester = int.parse(semesterController.value.text);
 
-                    await AppDatabase.updateModule(widget.module);
+                    context.read<ModulesListProvider>().update(widget.module);
                     Navigator.pop(context);
                   }
                 },

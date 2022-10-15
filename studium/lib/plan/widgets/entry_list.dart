@@ -54,7 +54,16 @@ class _EntryListState extends State<EntryList> {
           return EntryListRefreshIndicatorIntegrated(initialEntries: entries);
         } else if (snapshot.hasError) {
           log('error: ${snapshot.error}');
-          return ErrorWidget(error: '${snapshot.error}');
+          return Center(
+            child: Container(padding: EdgeInsets.all(24),
+              child: Text(
+                'Fehler: ${snapshot.error}',
+                style: TextStyle(
+                  color:  Theme.of(context).colorScheme.error,
+                ),
+              ),
+            ),
+          );
         } else {
           log("In Progress");
           return const ProgressWidget();

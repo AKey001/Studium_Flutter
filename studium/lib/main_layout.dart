@@ -16,19 +16,8 @@ class HomeLayout extends StatefulWidget {
 class _HomeLayoutState extends State<HomeLayout> with RestorationMixin {
   final RestorableInt _selectedIndex = RestorableInt(0);
 
-  List<Widget> _fragments = <Widget>[Plan(), Dashboard(), Modules()];
-
-  final RestorableInt i = RestorableInt(0);
-
   void _onItemTapped(int index) {
     setState(() {
-      if (index == 1) {
-        _fragments.removeAt(1);
-        _fragments.insert(1, Dashboard(key: GlobalKey()));
-      } else if (index == 2) {
-        _fragments.removeAt(2);
-        _fragments.insert(2, Modules(key: GlobalKey()));
-      }
       _selectedIndex.value = index;
     });
   }
@@ -36,13 +25,15 @@ class _HomeLayoutState extends State<HomeLayout> with RestorationMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // body: _fragments[_selectedIndex.value],
       body: IndexedStack(
         index: _selectedIndex.value,
-        children: _fragments,
+        children: const [
+          Plan(),
+          Dashboard(),
+          Modules(),
+        ],
       ),
       bottomNavigationBar: NavigationBar(
-        animationDuration: const Duration(milliseconds: 800),
         onDestinationSelected: _onItemTapped,
         selectedIndex: _selectedIndex.value,
         destinations: <Widget>[
@@ -69,11 +60,4 @@ class _HomeLayoutState extends State<HomeLayout> with RestorationMixin {
     registerForRestoration(_selectedIndex, 'nav_bar_index');
   }
 
-
-  Widget buildDashboard() {
-    return new Dashboard();
-  }
-  Widget buildModules() {
-    return new Modules();
-  }
 }

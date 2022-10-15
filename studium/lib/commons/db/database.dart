@@ -24,7 +24,7 @@ class AppDatabase {
 
   static Future<List<Module>> _modules(Database db) async {
     // Query the table for all The Dogs.
-    final List<Map<String, dynamic>> maps = await db.query('Module', orderBy: 'semester, name');
+    final List<Map<String, dynamic>> maps = await db.query('Module', orderBy: 'semester, weighting desc, name');
 
     // Convert the List<Map<String, dynamic> into a List<Dog>.
     return List.generate(maps.length, (i) {

@@ -1,57 +1,38 @@
-import 'package:flutter/material.dart' hide ErrorWidget;
-import 'package:studium/commons/db/database.dart';
-import 'package:studium/commons/widgets/standard_widgets.dart';
-import 'package:studium/modules/models/models.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:studium/commons/providers/modules_list_provider.dart';
 
 class ModulesCardWidget extends StatelessWidget {
   const ModulesCardWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          FutureBuilder<List<Module>>(
-            future: AppDatabase.loadAllModules(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                List<Module> modules = snapshot.data ?? [];
-                int all = modules.length;
-                int graded = modules.where((e) => e.grade != null).length;
-                int weighted = modules.where((e) => e.weighting > 0).length;
+    return const Card(
+      child: DataTableWidget(),
+    );
+  }
 
-                return DataTable(
-                  columns: <DataColumn>[
-                    _buildDataColumn('Module', context),
-                    _buildDataColumn('Anzahl', context),
-                  ],
-                  rows: <DataRow>[
-                    _buildDataCell("Gesamt", all.toString()),
-                    _buildDataCell("Benotet", graded.toString()),
-                    _buildDataCell("Gewichtet", weighted.toString()),
-                  ],
-                );
-              } else if (snapshot.hasError) {
-              return ErrorWidget(error: '${snapshot.error}');
-              } else {
-              return DataTable(
-                columns: <DataColumn>[
-                  _buildDataColumn('Module', context),
-                  _buildDataColumn('Anzahl', context),
-                ],
-                rows: <DataRow>[
-                  _buildDataCell("Gesamt", '0'),
-                  _buildDataCell("Benotet", '0'),
-                  _buildDataCell("Gewichtet", '0'),
-                ],
-              );
-              }
-            },
-          )
-        ],
-      ),
+}
+
+class DataTableWidget extends StatelessWidget {
+  const DataTableWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    int all = context.watch<ModulesListProvider>().modulesCount;
+    int graded = context.watch<ModulesListProvider>().modulesGraded;
+    int weighted = context.watch<ModulesListProvider>().modulesWeighted;
+
+    return DataTable(
+      columns: <DataColumn>[
+        _buildDataColumn('Module', context),
+        _buildDataColumn('Anzahl', context),
+      ],
+      rows: <DataRow>[
+        _buildDataCell("Gesamt", all.toString()),
+        _buildDataCell("Benotet", graded.toString()),
+        _buildDataCell("Gewichtet", weighted.toString()),
+      ],
     );
   }
   DataRow _buildDataCell(String identifier, String content) {
@@ -72,5 +53,3 @@ class ModulesCardWidget extends StatelessWidget {
     );
   }
 }
-
-

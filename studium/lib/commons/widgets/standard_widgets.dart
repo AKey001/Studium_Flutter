@@ -103,23 +103,3 @@ class TextFieldWidget extends StatelessWidget {
     );
   }
 }
-
-class ErrorWidget extends StatelessWidget {
-  final String error;
-
-  const ErrorWidget({Key? key, required this.error}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(padding: EdgeInsets.all(24),
-        child: Text(
-          error,
-          style: TextStyle(
-            color:  Theme.of(context).colorScheme.error,
-          ),
-        ),
-      ),
-    );
-  }
-}

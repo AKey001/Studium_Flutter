@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:studium/commons/db/database.dart';
+import 'package:provider/provider.dart';
+import 'package:studium/commons/providers/modules_list_provider.dart';
 import 'package:studium/commons/widgets/standard_widgets.dart';
 import 'package:studium/modules/models/models.dart';
 
@@ -37,17 +36,15 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: TextButton(
-                onPressed: () async {
+                onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    print(gradeController.value.text);
                     Module module = Module(
                       name: moduleController.value.text.trim(),
                       grade: gradeController.value.text != '' ? double.parse(gradeController.value.text) : null,
                       weighting: int.parse(weightingController.value.text.trim()),
                       semester: int.parse(semesterController.value.text.trim()),
                     );
-                    log(module.toString());
-                    await AppDatabase.insertModule(module);
+                    context.read<ModulesListProvider>().insert(module);
                     Navigator.pop(context);
                   }
                 },

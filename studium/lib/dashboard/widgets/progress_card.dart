@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart' hide ErrorWidget;
-import 'package:studium/commons/db/database.dart';
-import 'package:studium/commons/widgets/standard_widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:studium/commons/providers/modules_list_provider.dart';
 import 'package:studium/dashboard/chart/methods/reverse_mapper.dart';
 import 'package:studium/dashboard/chart/models/axis_titles.dart';
 import 'package:studium/dashboard/chart/models/border.dart';
@@ -48,54 +48,42 @@ class ProgressCardWidget extends StatelessWidget {
                ],
               ),
             ),
-            chart(color1, color2),
+            Chart(color1, color2),
         ],
       ),
     );
   }
-  Widget chart(Color color1, Color color2) {
-    return FutureBuilder<List<Module>>(
-      future: AppDatabase.loadAllModules(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          List<Module> modules = snapshot.data ?? [];
-          Map<int, List<Module>> grouped = groupBy(modules, (module) => module.semester);
+}
 
-          List<FlSpot> average = [];
-          List<FlSpot> result = [];
-          for (int i in grouped.keys) {
-            average.add(FlSpot(i.toDouble(), double.parse(calculateAverage(grouped[i] ?? []))));
-            result.add(FlSpot(i.toDouble(), double.parse(calculateResult(grouped[i] ?? []).substring(0, 3))));
-          }
+class Chart extends StatelessWidget {
+  final Color color1;
+  final Color color2;
 
-          return Chart(
-            average: average,
-            color1: color1,
-            result: result,
-            color2: color2,
-          );
-        } else if (snapshot.hasError) {
-          return ErrorWidget(error: '${snapshot.error}');
-        } else {
-          return Chart(
-            average: const [
-              FlSpot(1, 1),
-            ],
-            color1: color1,
-            result: const [
-              FlSpot(1, 1),
-            ],
-            color2: color2,
-          );
-        }
-      },
+  const Chart(this.color1, this.color2, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    List<Module> modules = context.watch<ModulesListProvider>().modules;
+    Map<int, List<Module>> grouped = groupBy(modules, (module) => module.semester);
+
+    List<FlSpot> average = [];
+    List<FlSpot> result = [];
+    for (int i in grouped.keys) {
+      average.add(FlSpot(i.toDouble(), double.parse(calculateAverageString(grouped[i] ?? []))));
+      result.add(FlSpot(i.toDouble(), double.parse(calculateResult(grouped[i] ?? []).substring(0, 3))));
+    }
+
+    return ChartWidget(
+      average: average,
+      color1: color1,
+      result: result,
+      color2: color2,
     );
   }
 }
 
 
-
-class Chart extends StatelessWidget {
+class ChartWidget extends StatelessWidget {
   final List<FlSpot> result;
   final List<FlSpot> average;
   double _minX = 1;
@@ -105,7 +93,7 @@ class Chart extends StatelessWidget {
   final Color color1;
   final Color color2;
 
-  Chart({super.key, required this.result, required this.average, required this.color1, required this.color2}) {
+  ChartWidget({super.key, required this.result, required this.average, required this.color1, required this.color2}) {
     _minX = 1;
     _maxX = 6;
   }

@@ -1,7 +1,4 @@
 
-import 'dart:async';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:studium/commons/widgets/standard_widgets.dart';
 import 'package:studium/modules/widgets/add_modules_dialog.dart';
@@ -22,7 +19,7 @@ class _ModulesState extends State<Modules> {
       appBar: const AppBarWidget(
         'Module'
       ),
-      body: ModulesList(),
+      body: const ModulesList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -31,17 +28,11 @@ class _ModulesState extends State<Modules> {
               builder: (BuildContext context) => const AddModuleDialog(),
               fullscreenDialog: true,
             ),
-          ).then(onReturned);
+          );
         },
         tooltip: 'Hinzufügen',
         child: const Icon(Icons.add),
       ),
     );
-  }
-
-  FutureOr onReturned(dynamic value) {
-    setState(() {
-      log('reload');
-    });
   }
 }
