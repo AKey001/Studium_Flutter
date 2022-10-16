@@ -22,12 +22,15 @@ void main() {
 }
 
 class Main extends StatelessWidget {
+  final List<ThemeMode> thememodes = const [ThemeMode.system, ThemeMode.dark, ThemeMode.light];
+
   const Main({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     context.read<ModulesListProvider>().init();
     context.read<SharedPrefsProvider>().init();
+    int themeMode = context.watch<SharedPrefsProvider>().displayMode;
 
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
@@ -38,11 +41,9 @@ class Main extends StatelessWidget {
           lightScheme = lightDynamic.harmonized();
           lightCustomColors = lightCustomColors.harmonized(lightScheme);
 
-          // Repeat for the dark color scheme.
           darkScheme = darkDynamic.harmonized();
           darkCustomColors = darkCustomColors.harmonized(darkScheme);
         } else {
-          // Otherwise, use fallback schemes.
           lightScheme = lightColorScheme;
           darkScheme = darkColorScheme;
         }
@@ -59,6 +60,7 @@ class Main extends StatelessWidget {
         );
 
         return MaterialApp(
+          themeMode: thememodes[themeMode],
           theme: lightThemedata.copyWith(
             textTheme: buildTextTheme(lightThemedata.textTheme),
           ),

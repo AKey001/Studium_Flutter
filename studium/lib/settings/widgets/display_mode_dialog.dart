@@ -10,11 +10,16 @@ class DisplayModeAlert extends StatefulWidget {
 }
 
 class _DisplayModeAlertState extends State<DisplayModeAlert> {
+  int displayMode = 0;
+
+  @override
+  void initState() {
+    displayMode = context.read<SharedPrefsProvider>().displayMode;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    int displayMode = context.watch<SharedPrefsProvider>().displayMode;
-
     return AlertDialog(
       scrollable: true,
       title: const Text("Erscheinungsbild"),
@@ -52,7 +57,10 @@ class _DisplayModeAlertState extends State<DisplayModeAlert> {
           child: const Text('Abbrechen'),
         ),
         TextButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            context.read<SharedPrefsProvider>().saveDisplayMode(displayMode);
+            Navigator.pop(context);
+          },
           child: const Text('Speichern'),
         ),
       ],
@@ -60,7 +68,10 @@ class _DisplayModeAlertState extends State<DisplayModeAlert> {
   }
 
   void _onDisplayModeChanges(int? value, BuildContext context) {
-    context.read<SharedPrefsProvider>().saveDisplayMode(value ?? 0);
+    // context.read<SharedPrefsProvider>().saveDisplayMode(value ?? 0);
+    setState(() {
+      displayMode = value ?? 0;
+    });
   }
 
 }
