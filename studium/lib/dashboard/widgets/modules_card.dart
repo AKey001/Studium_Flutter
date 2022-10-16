@@ -11,7 +11,6 @@ class ModulesCardWidget extends StatelessWidget {
       child: DataTableWidget(),
     );
   }
-
 }
 
 class DataTableWidget extends StatelessWidget {
@@ -35,6 +34,7 @@ class DataTableWidget extends StatelessWidget {
       ],
     );
   }
+
   DataRow _buildDataCell(String identifier, String content) {
     return DataRow(
       cells: <DataCell>[

@@ -13,8 +13,6 @@ import 'package:studium/dashboard/mapper/result_calculator.dart';
 import 'package:studium/modules/models/models.dart';
 import 'package:studium/theme/custom_color.g.dart';
 
-
-
 class ProgressCardWidget extends StatelessWidget {
   const ProgressCardWidget({Key? key}) : super(key: key);
 
@@ -82,7 +80,6 @@ class Chart extends StatelessWidget {
   }
 }
 
-
 class ChartWidget extends StatelessWidget {
   final List<FlSpot> result;
   final List<FlSpot> average;
@@ -97,8 +94,6 @@ class ChartWidget extends StatelessWidget {
     _minX = 1;
     _maxX = 6;
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -120,8 +115,4 @@ class ChartWidget extends StatelessWidget {
       ),
     );
   }
-
-
-
-
 }

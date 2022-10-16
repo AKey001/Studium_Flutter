@@ -9,11 +9,9 @@ FlGridData buildGrid(double minY, double maxY) {
       verticalInterval: 1,
       checkToShowHorizontalLine: (value) {
         final intValue = reverseY(value, minY, maxY).toInt();
-
         if (intValue == (maxY + minY).toInt()) {
           return false;
         }
-
         return true;
       }
   );

@@ -4,7 +4,6 @@ import 'package:studium/dashboard/widgets/modules_card.dart';
 import 'package:studium/dashboard/widgets/progress_card.dart';
 import 'package:studium/dashboard/widgets/result_card.dart';
 
-
 class DashboardListWidget extends StatelessWidget {
   const DashboardListWidget({Key? key}) : super(key: key);
 

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 const chartbrown = Color(0xFFC07015);
 
-
 CustomColors lightCustomColors = const CustomColors(
   sourceChartbrown: Color(0xFFC07015),
   chartbrown: Color(0xFF8E4F00),
@@ -19,8 +18,6 @@ CustomColors darkCustomColors = const CustomColors(
   chartbrownContainer: Color(0xFF6C3A00),
   onChartbrownContainer: Color(0xFFFFDCC1),
 );
-
-
 
 /// Defines a set of custom colors, each comprised of 4 complementary tones.
 ///

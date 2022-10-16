@@ -1,4 +1,3 @@
-
 enum EntryType {
   titleDay,
   tableEntry,
@@ -20,7 +19,6 @@ class TitleEntry extends Entry {
   }
 
   String get title => _title;
-
 }
 
 class TableEntry extends Entry {
@@ -47,7 +45,6 @@ class InfoEntry extends Entry {
   EntryType getType() {
     return EntryType.infoEntry;
   }
-
 }
 
 class PlanModel {

@@ -1,4 +1,3 @@
-
 enum ModuleEntryType {
   module,
   section
@@ -10,17 +9,12 @@ abstract class ModuleEntry {
 
 class Module {
   final int? id;
-
   String name;
-
   num? grade;
-
   int weighting;
-
   int semester;
 
-  Module(
-      {required this.name, required this.grade, required this.weighting, required this.semester, this.id});
+  Module({required this.name, required this.grade, required this.weighting, required this.semester, this.id});
 
   Map<String, dynamic> toMap() {
     return {
@@ -35,5 +29,4 @@ class Module {
   String toString() {
     return 'Module{id: $id, name: $name, grade: $grade, weighting: $weighting, semester: $semester';
   }
-
 }

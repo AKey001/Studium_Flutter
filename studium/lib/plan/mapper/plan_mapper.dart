@@ -7,7 +7,6 @@ PlanModel mapRawHtml(String html) {
   PlanModel plan = PlanModel();
   
   Document document = parser.parse(html);
-
   List<Element> imgs = document.getElementsByTagName('img');
   List<String> dayNames = imgs
       .where((Element element) => element.attributes.containsKey('alt'))
@@ -34,10 +33,8 @@ PlanModel mapRawHtml(String html) {
       tableEntry.teacher = _extractTeacherNames(rawEntry.getElementsByClassName('tabcell_blue2').first.children);
       entriesOfDay.add(tableEntry);
     }
-    
     _mapRawEntryToDay(plan, day!, entriesOfDay);
   }
-
   return plan;
 }
 
@@ -120,6 +117,5 @@ List<Entry> mapToEntries(PlanModel plan, bool asWeek) {
     entries.add(TitleEntry('Sonntag'));
     sunday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(sunday);
   }
-
   return entries;
 }

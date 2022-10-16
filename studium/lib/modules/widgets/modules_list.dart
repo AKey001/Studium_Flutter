@@ -23,7 +23,6 @@ class ModulesList extends StatelessWidget {
       return ListView.builder(
         itemCount: entries.length,
         itemBuilder: (context, index) {
-
           if (entries[index] is Module) {
             Module module = entries[index];
             String grade = '';
@@ -90,7 +89,6 @@ class ModulesList extends StatelessWidget {
   List processModules(List<Module> modules) {
     List processed = [];
     Map<int, List<Module>> grouped = groupBy(modules, (module) => module.semester);
-
     List<int> semester = grouped.keys.toList();
     semester.sort();
     semester = semester.reversed.toList();

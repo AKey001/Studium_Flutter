@@ -1,4 +1,3 @@
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -12,17 +11,14 @@ LineTouchData buildTooltip(BuildContext context, List<FlSpot> result, List<FlSpo
         fitInsideHorizontally: true,
         tooltipMargin: 8,
         getTooltipItems: (touchedSpots) {
-          return touchedSpots.map(
-                (LineBarSpot touchedSpot) {
-              const textStyle = TextStyle();
-
-              String tooltip;
-              touchedSpot.bar.color == color2? tooltip = '${result[touchedSpot.spotIndex].y.toStringAsFixed(1)}' : tooltip = '${average[touchedSpot.spotIndex].y.toStringAsFixed(2)}';
-              return LineTooltipItem(
-                tooltip,
-                Theme.of(context).textTheme.labelSmall ?? textStyle,
-              );
-            },
+          return touchedSpots.map((LineBarSpot touchedSpot) {
+            String tooltip;
+            touchedSpot.bar.color == color2? tooltip = result[touchedSpot.spotIndex].y.toStringAsFixed(1) : tooltip = average[touchedSpot.spotIndex].y.toStringAsFixed(2);
+            return LineTooltipItem(
+              tooltip,
+              Theme.of(context).textTheme.labelSmall ?? const TextStyle(),
+            );
+          },
           ).toList();
         },
       ),
@@ -30,7 +26,6 @@ LineTouchData buildTooltip(BuildContext context, List<FlSpot> result, List<FlSpo
       getTouchLineEnd: (_, __) => double.infinity
   );
 }
-
 
 List<TouchedSpotIndicatorData> _getTouchSpotIndicator(LineChartBarData barData, List<int> indicators) {
   return indicators.map(

@@ -24,7 +24,6 @@ String calculateAverageString(List<Module> modules) {
   } else {
     return '-.-';
   }
-
 }
 
 String calculateResult(List<Module> modules) {
@@ -35,7 +34,6 @@ String calculateResult(List<Module> modules) {
     double sumWeightedGrades = modules.fold(0, (previousValue, element) => previousValue + element.weighting * (element.grade ?? 0.0));
 
     double result = sumWeightedGrades / sumWeightings;
-
     return result.toStringAsFixed(3);
   }
 

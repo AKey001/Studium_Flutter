@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 
-
 Future<http.Response> fetchData(int week, String matrikel) async {
   Uri uri = Uri.https(
       "service.hszg.de", "/stundenplan/index.php",

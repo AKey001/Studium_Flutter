@@ -1,17 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:studium/commons/widgets/standard_widgets.dart';
 import 'package:studium/modules/widgets/add_modules_dialog.dart';
 import 'package:studium/modules/widgets/modules_list.dart';
 
-class Modules extends StatefulWidget {
+class Modules extends StatelessWidget {
   const Modules({Key? key}) : super(key: key);
-
-  @override
-  State<Modules> createState() => _ModulesState();
-}
-
-class _ModulesState extends State<Modules> {
 
   @override
   Widget build(BuildContext context) {

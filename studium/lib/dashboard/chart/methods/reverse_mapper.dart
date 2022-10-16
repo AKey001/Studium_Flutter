@@ -1,4 +1,3 @@
-
 import 'package:fl_chart/fl_chart.dart';
 
 double reverseY(double y, double minX, double maxX) {

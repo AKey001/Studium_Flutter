@@ -4,7 +4,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:studium/dashboard/chart/methods/reverse_mapper.dart';
 
-
 Widget leftTitleWidgets(double value, TitleMeta meta, double minX, double maxX, double minY, double maxY) {
   final intValue = reverseY(value, minX, maxX).toInt();
 

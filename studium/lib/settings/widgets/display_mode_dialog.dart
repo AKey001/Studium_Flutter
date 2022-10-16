@@ -73,5 +73,4 @@ class _DisplayModeAlertState extends State<DisplayModeAlert> {
       displayMode = value ?? 0;
     });
   }
-
 }

@@ -4,16 +4,11 @@ import 'package:studium/commons/providers/prefs_provider.dart';
 import 'package:studium/settings/widgets/display_mode_dialog.dart';
 import 'package:studium/settings/widgets/matrikel_dialog.dart';
 
-class SettingsList extends StatefulWidget {
+class SettingsList extends StatelessWidget {
   const SettingsList({Key? key}) : super(key: key);
 
-  @override
-  State<SettingsList> createState() => _SettingsListState();
-}
-
-class _SettingsListState extends State<SettingsList> {
-  final List<String> _displayModes = ['Systemstandard', 'Darkmode', 'Lightmode'];
-  final List<String> _displayTypes = ['Heutiger und morgiger Tag werden angezeigt.', 'Gesamte Woche wird angezeigt.'];
+  final List<String> _displayModes = const ['Systemstandard', 'Darkmode', 'Lightmode'];
+  final List<String> _displayTypes = const ['Heutiger und morgiger Tag werden angezeigt.', 'Gesamte Woche wird angezeigt.'];
 
   @override
   Widget build(BuildContext context) {

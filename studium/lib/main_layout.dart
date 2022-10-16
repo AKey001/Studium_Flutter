@@ -58,5 +58,4 @@ class _HomeLayoutState extends State<HomeLayout> with RestorationMixin {
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
     registerForRestoration(_selectedIndex, 'nav_bar_index');
   }
-
 }

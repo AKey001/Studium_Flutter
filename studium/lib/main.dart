@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studium/commons/providers/modules_list_provider.dart';
 import 'package:studium/commons/providers/prefs_provider.dart';
-import 'package:studium/theme/color_schemes.dart';
+import 'package:studium/main_layout.dart';
+import 'package:studium/theme/color_schemes.g.dart';
 import 'package:studium/theme/custom_color.g.dart';
 import 'package:studium/theme/theme.dart';
-
-import 'main_layout.dart';
 
 void main() {
   runApp(

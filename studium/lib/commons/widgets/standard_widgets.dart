@@ -74,9 +74,9 @@ class ProgressWidget extends StatelessWidget {
 class TextFieldWidget extends StatelessWidget {
   final String initalValue;
   final String label;
-  IconData? icon;
+  final IconData? icon;
   TextEditingController? controller;
-  String? Function(String?)? validator;
+  final String? Function(String?)? validator;
 
   TextFieldWidget({super.key, required this.initalValue, required this.label, this.icon, this.validator, this.controller});
 

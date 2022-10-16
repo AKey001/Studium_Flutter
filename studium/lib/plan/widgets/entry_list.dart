@@ -11,26 +11,22 @@ import 'package:studium/plan/models/models.dart';
 import 'package:studium/plan/widgets/entry_list_layout.dart';
 import 'package:week_of_year/date_week_extensions.dart';
 
-class EntryList extends StatefulWidget {
-  const EntryList({Key? key}) : super(key: key);
+class EntryList extends StatelessWidget {
+  const EntryList({Key? key, this.initialWeek}) : super(key: key);
 
-  @override
-  State<EntryList> createState() => _EntryListState();
-}
-
-class _EntryListState extends State<EntryList> {
-  int _week = DateTime.now().weekOfYear;
-
-  setWeek(int week) {
-    _week = week;
-  }
+  final int? initialWeek;
 
   @override
   Widget build(BuildContext context) {
     String matrikel = context.watch<SharedPrefsProvider>().matrikel;
+    int week = DateTime.now().weekOfYear;
+
+    if (initialWeek != null) {
+      week = initialWeek ?? 40;
+    }
 
     return FutureBuilder<http.Response>(
-      future: fetchData(_week, matrikel),
+      future: fetchData(week, matrikel),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           if (snapshot.hasData) {

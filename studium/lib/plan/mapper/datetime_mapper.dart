@@ -1,4 +1,3 @@
-
 String calculateDayName(int weekday) {
   switch (weekday) {
     case 8:

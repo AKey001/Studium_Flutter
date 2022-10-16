@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:studium/commons/widgets/standard_widgets.dart';
 import 'package:studium/settings/widgets/settings_list.dart';

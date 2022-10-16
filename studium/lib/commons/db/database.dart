@@ -7,12 +7,12 @@ class AppDatabase {
   static Future<Database> _init() async {
     String dbPath = join(await getDatabasesPath(), "ResultCalculator");
     return openDatabase(dbPath,
-        onCreate: (db, version) {
-          return db.execute(
-            'CREATE TABLE Module(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, grade FLOAT, weighting INTEGER, semester INTEGER)',
-          );
-        },
-        version: 4);
+      onCreate: (db, version) {
+        return db.execute(
+          'CREATE TABLE Module(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, grade FLOAT, weighting INTEGER, semester INTEGER)',
+        );
+      },
+      version: 4);
   }
 
   static Future<void> _close(Database db) async {
@@ -27,10 +27,8 @@ class AppDatabase {
   }
 
   static Future<List<Module>> _modules(Database db) async {
-    // Query the table for all The Dogs.
     final List<Map<String, dynamic>> maps = await db.query('Module', orderBy: 'semester, weighting desc, name');
 
-    // Convert the List<Map<String, dynamic> into a List<Dog>.
     return List.generate(maps.length, (i) {
       return Module(
         id: maps[i]['id'],
@@ -83,5 +81,4 @@ class AppDatabase {
     _delete(module, db);
     _close(db);
   }
-
 }

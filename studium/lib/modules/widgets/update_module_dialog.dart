@@ -5,9 +5,9 @@ import 'package:studium/commons/widgets/standard_widgets.dart';
 import 'package:studium/modules/models/models.dart';
 
 class UpdateModuleDialog extends StatefulWidget {
-  Module module;
+  final Module module;
   
-  UpdateModuleDialog({super.key, required this.module});
+  const UpdateModuleDialog({super.key, required this.module});
 
   @override
   State<UpdateModuleDialog> createState() => _UpdateModuleDialogState();
@@ -113,32 +113,32 @@ class _UpdateModuleDialogState extends State<UpdateModuleDialog> {
                   ),
                 ],
               ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: TextFieldWidget(
-                        initalValue: widget.module.grade.toString(),
-                        label: 'Note',
-                        controller: gradeController,
-                        validator: (value) {
-                          if (value != null && value.isNotEmpty){
-                            double? testedAsDouble = double.tryParse(value);
-                            if (testedAsDouble == null || testedAsDouble.toString().length > 3 || testedAsDouble > 5 || testedAsDouble < 1) {
-                              return 'Ungültige Note';
-                            }
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: TextFieldWidget(
+                      initalValue: widget.module.grade.toString(),
+                      label: 'Note',
+                      controller: gradeController,
+                      validator: (value) {
+                        if (value != null && value.isNotEmpty){
+                          double? testedAsDouble = double.tryParse(value);
+                          if (testedAsDouble == null || testedAsDouble.toString().length > 3 || testedAsDouble > 5 || testedAsDouble < 1) {
+                            return 'Ungültige Note';
                           }
-                          return null;
-                        },
-                      ),
+                        }
+                        return null;
+                      },
                     ),
-                  ]
-                ),
-              ],
-            ),
+                  ),
+                ]
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 }
