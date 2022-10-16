@@ -103,3 +103,23 @@ class TextFieldWidget extends StatelessWidget {
     );
   }
 }
+
+class CustomErrorWidget extends StatelessWidget {
+  final String error;
+
+  const CustomErrorWidget({Key? key, required this.error}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(padding: EdgeInsets.all(24),
+        child: Text(
+          'Fehler: $error',
+          style: TextStyle(
+            color:  Theme.of(context).colorScheme.error,
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -85,12 +85,10 @@ String _extractTeacherNames(List<Element> teachers) {
   return teacher;
 }
 
-// todo settings
-// todo sunday: monday = next week
-List<Entry> mapToEntries(PlanModel plan) {
+List<Entry> mapToEntries(PlanModel plan, bool asWeek) {
   List<Entry> entries = [];
 
-  if (true) {
+  if (!asWeek) {
     List<Entry> today = plan.today();
     List<Entry> tomorrow = plan.tomorrow();
 
@@ -121,7 +119,6 @@ List<Entry> mapToEntries(PlanModel plan) {
     saturday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(saturday);
     entries.add(TitleEntry('Sonntag'));
     sunday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(sunday);
-
   }
 
   return entries;

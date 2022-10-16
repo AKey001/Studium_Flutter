@@ -35,15 +35,11 @@ class _EntryListState extends State<EntryList> {
         if (snapshot.connectionState != ConnectionState.done) {
           if (snapshot.hasData) {
             String? html = snapshot.data!.body;
-            List<Entry> entries = htmlToList(html);
 
             return Stack(
               children: <Widget>[
-                EntryListRefreshIndicatorIntegrated(initialEntries: entries),
-                const Material(
-                  color: Color.fromRGBO(0, 0, 0, 0.5),
-                  child: ProgressWidget(),
-                )
+                EntryListRefreshIndicatorIntegrated(initialHtml: html, matrikel: matrikel),
+                buildDisabledBackground(),
               ],
             );
           } else {
@@ -51,75 +47,66 @@ class _EntryListState extends State<EntryList> {
           }
         }
         if (snapshot.hasData) {
-          log("data already here");
           String? html = snapshot.data!.body;
-          List<Entry> entries = htmlToList(html);
-
-          return EntryListRefreshIndicatorIntegrated(initialEntries: entries);
+          return EntryListRefreshIndicatorIntegrated(initialHtml: html, matrikel: matrikel);
         } else if (snapshot.hasError) {
           log('error: ${snapshot.error}');
-          return Center(
-            child: Container(padding: EdgeInsets.all(24),
-              child: Text(
-                'Fehler: ${snapshot.error}',
-                style: TextStyle(
-                  color:  Theme.of(context).colorScheme.error,
-                ),
-              ),
-            ),
-          );
+          return CustomErrorWidget(error: '${snapshot.error}');
         } else {
-          log("In Progress");
           return const ProgressWidget();
         }
       },
     );
   }
+
+  Material buildDisabledBackground() {
+    return const Material(
+      color: Color.fromRGBO(0, 0, 0, 0.5),
+      child: ProgressWidget(),
+    );
+  }
 }
 
-
-// Zwischenschritt für RefreshIndicator
+// ==================================================
 
 class EntryListRefreshIndicatorIntegrated extends StatefulWidget {
-  final List<Entry>? initialEntries;
+  final String? initialHtml;
+  final int? week;
+  final String? matrikel;
 
-  const EntryListRefreshIndicatorIntegrated({super.key, this.initialEntries = const []});
+  const EntryListRefreshIndicatorIntegrated({super.key, this.initialHtml = '', this.week, required this.matrikel});
 
   @override
   State<EntryListRefreshIndicatorIntegrated> createState() => _EntryListRefreshIndicatorIntegratedState();
 }
 
 class _EntryListRefreshIndicatorIntegratedState extends State<EntryListRefreshIndicatorIntegrated> {
-  final int _week = DateTime.now().weekOfYear;
-  List<Entry> entries = [];
+  int _week = DateTime.now().weekOfYear;
+  String _html = '';
+  String _matrikel = '';
 
   @override
   void initState() {
-    entries = widget.initialEntries ?? [];
+    _html = widget.initialHtml ?? '';
+    _week = widget.week ?? DateTime.now().weekOfYear;
+    _matrikel = widget.matrikel ?? 'IIBb20';
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    String matrikel = context.watch<SharedPrefsProvider>().matrikel;
+    PlanModel plan = mapRawHtml(_html);
+    bool displayTypeWeek = context.watch<SharedPrefsProvider>().displayTypeWeek;
+    List<Entry> entries = mapToEntries(plan, displayTypeWeek);
 
     return RefreshIndicator(
       child: EntryListWidget(entries),
       onRefresh: () async {
-        http.Response response = await fetchData(_week, matrikel);
+        http.Response response = await fetchData(_week, _matrikel);
         setState(() {
-          String html = response.body;
-          entries = htmlToList(html);
+          _html = response.body;
         });
       },
     );
   }
-
-}
-
-
-List<Entry> htmlToList(String html) {
-  PlanModel plan = mapRawHtml(html);
-  List<Entry> entries = mapToEntries(plan);
-  return entries;
 }
