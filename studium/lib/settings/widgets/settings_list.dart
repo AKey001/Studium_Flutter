@@ -1,6 +1,8 @@
-
 import 'package:flutter/material.dart';
-import 'package:studium/settings/widgets/alert_dialog.dart';
+import 'package:provider/provider.dart';
+import 'package:studium/commons/providers/prefs_provider.dart';
+import 'package:studium/settings/widgets/display_mode_dialog.dart';
+import 'package:studium/settings/widgets/matrikel_dialog.dart';
 
 class SettingsList extends StatefulWidget {
   const SettingsList({Key? key}) : super(key: key);
@@ -10,14 +12,15 @@ class SettingsList extends StatefulWidget {
 }
 
 class _SettingsListState extends State<SettingsList> {
-  int _displayMode = 0;
-  String _matrikel = 'IIBb20';
-  bool _displayTypeWeek = false;
-
-  // todo shared_preferences
+  final List<String> _displayModes = ['Systemstandard', 'Darkmode', 'Lightmode'];
+  final List<String> _displayTypes = ['Heutiger und morgiger Tag werden angezeigt.', 'Gesamte Woche wird angezeigt.'];
 
   @override
   Widget build(BuildContext context) {
+    String matrikel = context.watch<SharedPrefsProvider>().matrikel;
+    bool displayTypeWeek = context.watch<SharedPrefsProvider>().displayTypeWeek;
+    int displayMode = context.watch<SharedPrefsProvider>().displayMode;
+
     return ListView(
       children: <Widget>[
         const ListTile(
@@ -25,41 +28,34 @@ class _SettingsListState extends State<SettingsList> {
         ),
         ListTile(
           title: const Text('Erscheinungsbild'),
-          subtitle: const Text('Systemstandard'),
+          subtitle: Text(_displayModes[displayMode]),
           onTap: () {
             showDialog(context: context,
-                builder: (BuildContext context) {
-                  return DisplayModeAlert(onValueChange: _onDisplayModeChanges, initialValue: _displayMode);
-                });
+              builder: (BuildContext context) {
+                return const DisplayModeAlert();
+              });
           },
         ),
         const ListTile(
           subtitle: Text('Stundenplan'),
         ),
-        const ListTile(
-          title: Text('Matrikel'),
-          subtitle: Text('IIBb20'),
-        ),
         ListTile(
+          title: const Text('Matrikel'),
+          subtitle: Text(matrikel),
+          onTap: () {
+            showDialog(context: context,
+              builder: (BuildContext context) {
+                return const MatrikelAlert();
+              });
+          },
+        ),
+        SwitchListTile(
           title: const Text('Darstellung: Gesamte Woche'),
-          subtitle: Text('Heutiger und morgiger Tag werden angezeigt.'),
-          isThreeLine: false,
-          trailing: Switch(value: _displayTypeWeek, onChanged: onSwitchChanged),
+          subtitle: Text(_displayTypes[displayTypeWeek == true ? 1 : 0]),
+          onChanged: (value) => context.read<SharedPrefsProvider>().saveDisplayTypeWeek(value),
+          value: displayTypeWeek,
         ),
       ],
     );
   }
-
-  void onSwitchChanged(bool value) {
-    setState(() {
-      _displayTypeWeek = value;
-    });
-  }
-
-  void _onDisplayModeChanges(int? value) {
-    setState(() {
-      _displayMode = value ?? 0;
-    });
-  }
-
 }

@@ -11,9 +11,8 @@ class Plan extends StatefulWidget {
 }
 
 class _PlanState extends State<Plan> {
-  Widget? _list;
 
-  // todo calendar popup -> + loading
+  // todo day chooser
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +23,7 @@ class _PlanState extends State<Plan> {
           ]
       ),
       // body: (_list != null) ? _list! : getEntryList(),
-      body: EntryList(),
+      body: const EntryList(),
     );
   }
 }

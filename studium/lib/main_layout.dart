@@ -10,7 +10,6 @@ class HomeLayout extends StatefulWidget {
 
   @override
   State<HomeLayout> createState() => _HomeLayoutState();
-
 }
 
 class _HomeLayoutState extends State<HomeLayout> with RestorationMixin {

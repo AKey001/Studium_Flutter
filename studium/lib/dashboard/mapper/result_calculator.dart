@@ -3,7 +3,6 @@ import 'package:studium/modules/models/models.dart';
 double? calculateAverage(List<Module> modules) {
   if (modules.isNotEmpty) {
     int count = modules.where((element) => element.grade != null).length;
-    print('COUNT: $count');
     double sum = 0;
     for (Module module in modules) {
       num grade = module.grade ?? 0;

@@ -2,6 +2,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studium/commons/providers/modules_list_provider.dart';
+import 'package:studium/commons/providers/prefs_provider.dart';
 import 'package:studium/theme/color_schemes.dart';
 import 'package:studium/theme/custom_color.g.dart';
 import 'package:studium/theme/theme.dart';
@@ -13,6 +14,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ModulesListProvider()),
+        ChangeNotifierProvider(create: (_) => SharedPrefsProvider()),
       ],
       child: const Main(),
     ),
@@ -25,6 +27,7 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<ModulesListProvider>().init();
+    context.read<SharedPrefsProvider>().init();
 
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {

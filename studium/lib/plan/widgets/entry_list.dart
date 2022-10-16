@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart' hide ErrorWidget;
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:studium/commons/network/data_fetcher.dart';
+import 'package:studium/commons/providers/prefs_provider.dart';
 import 'package:studium/commons/widgets/standard_widgets.dart';
 import 'package:studium/plan/mapper/plan_mapper.dart';
 import 'package:studium/plan/models/models.dart';
@@ -25,8 +27,10 @@ class _EntryListState extends State<EntryList> {
 
   @override
   Widget build(BuildContext context) {
+    String matrikel = context.watch<SharedPrefsProvider>().matrikel;
+
     return FutureBuilder<http.Response>(
-      future: fetchData(_week),
+      future: fetchData(_week, matrikel),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           if (snapshot.hasData) {
@@ -97,10 +101,12 @@ class _EntryListRefreshIndicatorIntegratedState extends State<EntryListRefreshIn
 
   @override
   Widget build(BuildContext context) {
+    String matrikel = context.watch<SharedPrefsProvider>().matrikel;
+
     return RefreshIndicator(
       child: EntryListWidget(entries),
       onRefresh: () async {
-        http.Response response = await fetchData(_week);
+        http.Response response = await fetchData(_week, matrikel);
         setState(() {
           String html = response.body;
           entries = htmlToList(html);
@@ -108,8 +114,6 @@ class _EntryListRefreshIndicatorIntegratedState extends State<EntryListRefreshIn
       },
     );
   }
-
-
 
 }
 

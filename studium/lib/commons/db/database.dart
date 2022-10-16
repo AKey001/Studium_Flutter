@@ -15,6 +15,10 @@ class AppDatabase {
         version: 4);
   }
 
+  static Future<void> _close(Database db) async {
+    await db.close();
+  }
+
   static void _insert(Module module, Database db) async {
     await db.insert(
         'Module',
@@ -57,22 +61,27 @@ class AppDatabase {
 
   static Future<List<Module>> loadAllModules() async {
     Database db = await _init();
-    return await _modules(db);
+    List<Module> modules = await _modules(db);
+    _close(db);
+    return modules;
   }
 
   static Future<void> insertModule(Module module) async {
     Database db = await _init();
     _insert(module, db);
+    _close(db);
   }
 
   static Future<void> updateModule(Module module) async {
     Database db = await _init();
     _update(module, db);
+    _close(db);
   }
 
   static Future<void> deleteModule(Module module) async {
     Database db = await _init();
     _delete(module, db);
+    _close(db);
   }
 
 }
