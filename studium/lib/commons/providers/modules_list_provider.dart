@@ -36,5 +36,6 @@ class ModulesListProvider with ChangeNotifier {
 
   void init() async {
     _modules = await AppDatabase.loadAllModules();
+    notifyListeners();
   }
 }
