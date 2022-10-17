@@ -62,6 +62,7 @@ class Main extends StatelessWidget {
           themeMode: thememodes[themeMode],
           theme: lightThemedata.copyWith(
             textTheme: buildTextTheme(lightThemedata.textTheme),
+            scaffoldBackgroundColor: lightThemedata.colorScheme.background,
           ),
           darkTheme: darkThemedata.copyWith(
             textTheme: buildTextTheme(darkThemedata.textTheme),
