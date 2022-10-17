@@ -12,7 +12,10 @@ class Plan extends StatelessWidget {
         'Stundenplan',
         btnActions: <Widget>[
         IconButton(onPressed: (){
-          // TODO day chooser
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => const DayLayout()),
+          // );
         },
         icon: const Icon(Icons.calendar_month)),
         ],

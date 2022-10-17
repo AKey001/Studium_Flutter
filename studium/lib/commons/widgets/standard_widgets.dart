@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:studium/settings/settings_screen.dart';
+import 'package:studium/settings/settings_layout.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String _title;
@@ -35,7 +35,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
               if (value == 1) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                  MaterialPageRoute(builder: (context) => const SettingsLayout()),
                 );
               }
             },
