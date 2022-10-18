@@ -69,6 +69,27 @@ void _mapRawEntryToDay(PlanModel plan, String day, List<TableEntry> entriesOfDay
   }
 }
 
+List<TableEntry> mapDay(PlanModel plan, int day) {
+  switch (day) {
+    case 1:
+      return plan.monday;
+    case 2:
+      return plan.tuesday;
+    case 3:
+      return plan.wednesday;
+    case 4:
+      return plan.thursday;
+    case 5:
+      return plan.friday;
+    case 6:
+      return plan.saturday;
+    case 7:
+      return plan.sunday;
+    default:
+      return plan.today();
+  }
+}
+
 String _extractTeacherNames(List<Element> teachers) {
   String teacher = '';
   for (int i = 0; i < teachers.length; i++) {
@@ -82,40 +103,49 @@ String _extractTeacherNames(List<Element> teachers) {
   return teacher;
 }
 
-List<Entry> mapToEntries(PlanModel plan, bool asWeek) {
+List<Entry> mapToEntries(PlanModel plan, DisplayType displayType, {DateTime? date}) {
   List<Entry> entries = [];
 
-  if (!asWeek) {
-    List<Entry> today = plan.today();
-    List<Entry> tomorrow = plan.tomorrow();
+  switch (displayType) {
+    case DisplayType.single_day:
 
-    entries.add(TitleEntry(calculateDayName(DateTime.now().weekday)));
-    today.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(today);
-    entries.add(TitleEntry(calculateDayName(DateTime.now().weekday + 1)));
-    tomorrow.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(tomorrow);
-  } else {
-    List<Entry> monday = plan.monday;
-    List<Entry> tuesday = plan.tuesday;
-    List<Entry> wednesday = plan.wednesday;
-    List<Entry> thursday = plan.thursday;
-    List<Entry> friday = plan.friday;
-    List<Entry> saturday = plan.saturday;
-    List<Entry> sunday = plan.sunday;
+      DateTime dateTime = date ?? DateTime.now();
+      List<Entry> today = mapDay(plan, dateTime.weekday);
+      entries.add(TitleEntry('${calculateDayName(dateTime.weekday)}, ${dateTime.day}.${dateTime.month}.${dateTime.year}'));
+      today.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(today);
+      return entries;
+    case DisplayType.two_days:
+      List<Entry> today = plan.today();
+      List<Entry> tomorrow = plan.tomorrow();
 
-    entries.add(TitleEntry('Montag'));
-    monday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(monday);
-    entries.add(TitleEntry('Dienstag'));
-    tuesday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(tuesday);
-    entries.add(TitleEntry('Mittwoch'));
-    wednesday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(wednesday);
-    entries.add(TitleEntry('Donnerstag'));
-    thursday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(thursday);
-    entries.add(TitleEntry('Freitag'));
-    friday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(friday);
-    entries.add(TitleEntry('Samstag'));
-    saturday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(saturday);
-    entries.add(TitleEntry('Sonntag'));
-    sunday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(sunday);
+      entries.add(TitleEntry(calculateDayName(DateTime.now().weekday)));
+      today.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(today);
+      entries.add(TitleEntry(calculateDayName(DateTime.now().weekday + 1)));
+      tomorrow.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(tomorrow);
+      return entries;
+    case DisplayType.week:
+      List<Entry> monday = plan.monday;
+      List<Entry> tuesday = plan.tuesday;
+      List<Entry> wednesday = plan.wednesday;
+      List<Entry> thursday = plan.thursday;
+      List<Entry> friday = plan.friday;
+      List<Entry> saturday = plan.saturday;
+      List<Entry> sunday = plan.sunday;
+
+      entries.add(TitleEntry('Montag'));
+      monday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(monday);
+      entries.add(TitleEntry('Dienstag'));
+      tuesday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(tuesday);
+      entries.add(TitleEntry('Mittwoch'));
+      wednesday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(wednesday);
+      entries.add(TitleEntry('Donnerstag'));
+      thursday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(thursday);
+      entries.add(TitleEntry('Freitag'));
+      friday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(friday);
+      entries.add(TitleEntry('Samstag'));
+      saturday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(saturday);
+      entries.add(TitleEntry('Sonntag'));
+      sunday.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(sunday);
+      return entries;
   }
-  return entries;
 }

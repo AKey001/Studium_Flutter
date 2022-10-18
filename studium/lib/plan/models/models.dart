@@ -102,3 +102,9 @@ class PlanModel {
     }
   }
 }
+
+enum DisplayType {
+  two_days,
+  week,
+  single_day
+}

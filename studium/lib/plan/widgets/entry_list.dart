@@ -35,7 +35,7 @@ class EntryList extends StatelessWidget {
             return Stack(
               children: <Widget>[
                 EntryListRefreshIndicatorIntegrated(initialHtml: html, matrikel: matrikel),
-                buildDisabledBackground(),
+                const DisabledBackground(),
               ],
             );
           } else {
@@ -52,13 +52,6 @@ class EntryList extends StatelessWidget {
           return const ProgressWidget();
         }
       },
-    );
-  }
-
-  Material buildDisabledBackground() {
-    return const Material(
-      color: Color.fromRGBO(0, 0, 0, 0.5),
-      child: ProgressWidget(),
     );
   }
 }
@@ -93,7 +86,7 @@ class _EntryListRefreshIndicatorIntegratedState extends State<EntryListRefreshIn
   Widget build(BuildContext context) {
     PlanModel plan = mapRawHtml(_html);
     bool displayTypeWeek = context.watch<SharedPrefsProvider>().displayTypeWeek;
-    List<Entry> entries = mapToEntries(plan, displayTypeWeek);
+    List<Entry> entries = mapToEntries(plan, displayTypeWeek ? DisplayType.week : DisplayType.two_days);
 
     return RefreshIndicator(
       child: EntryListWidget(entries),

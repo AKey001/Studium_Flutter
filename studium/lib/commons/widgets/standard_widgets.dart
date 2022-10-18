@@ -125,3 +125,15 @@ class CustomErrorWidget extends StatelessWidget {
     );
   }
 }
+
+class DisabledBackground extends StatelessWidget {
+  const DisabledBackground({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Material(
+      color: Color.fromRGBO(0, 0, 0, 0.5),
+      child: ProgressWidget(),
+    );
+  }
+}
