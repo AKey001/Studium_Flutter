@@ -96,9 +96,6 @@ class TextFieldWidget extends StatelessWidget {
         decoration: InputDecoration(
           labelText: label,
           border: const OutlineInputBorder(),
-          suffixIcon: Icon(
-            icon
-          ),
           labelStyle: Theme.of(context).textTheme.bodySmall,
         ),
         controller: controller,

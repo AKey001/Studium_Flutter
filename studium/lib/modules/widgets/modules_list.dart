@@ -31,6 +31,9 @@ class ModulesList extends StatelessWidget {
             return ListTile(
               title: Text(
                 module.name,
+                maxLines: 1,
+                overflow: TextOverflow.fade,
+                softWrap: false,
               ),
               leading: Text(
                   grade,
