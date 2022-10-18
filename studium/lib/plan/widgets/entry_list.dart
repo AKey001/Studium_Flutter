@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:flutter/material.dart' hide ErrorWidget;
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:studium/commons/network/data_fetcher.dart';

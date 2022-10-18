@@ -77,6 +77,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
                 children: [
                   Expanded(
                     child: TextFieldWidget(
+                      keyboardType: TextInputType.number,
                       initalValue: '',
                       label: 'Semester',
                       controller: semesterController,
@@ -86,7 +87,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
                         }
                         int? testedAsInt = int.tryParse(value);
                         if (testedAsInt == null || testedAsInt < 1 || testedAsInt > 30) {
-                          return 'Ungültiges Semester';
+                          return 'ungültig';
                         }
                         return null;
                       },
@@ -95,6 +96,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: TextFieldWidget(
+                      keyboardType: TextInputType.number,
                       initalValue: '',
                       label: 'Wichtung',
                       controller: weightingController,
@@ -104,7 +106,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
                         }
                         int? testedAsInt = int.tryParse(value);
                         if (testedAsInt == null || testedAsInt < 0) {
-                          return 'Ungültige Wichtung';
+                          return 'ungültig';
                         }
                         return null;
                       },
@@ -118,6 +120,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
                 children: [
                   Expanded(
                     child: TextFieldWidget(
+                      keyboardType: TextInputType.number,
                       initalValue: '',
                       label: 'Note',
                       controller: gradeController,
@@ -125,7 +128,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
                         if (value != null && value.isNotEmpty){
                           double? testedAsDouble = double.tryParse(value);
                           if (testedAsDouble == null || testedAsDouble.toString().length > 3 || testedAsDouble > 5 || testedAsDouble < 1) {
-                            return 'Ungültige Note';
+                            return 'ungültig';
                           }
                         }
                         return null;
