@@ -64,6 +64,7 @@ class _UpdateModuleDialogState extends State<UpdateModuleDialog> {
               TextFieldWidget(
                 initalValue: widget.module.name,
                 label: 'Modul',
+                textInputAction: TextInputAction.next,
                 controller: moduleController,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -81,6 +82,7 @@ class _UpdateModuleDialogState extends State<UpdateModuleDialog> {
                       keyboardType: TextInputType.number,
                       initalValue: widget.module.semester.toString(),
                       label: 'Semester',
+                      textInputAction: TextInputAction.next,
                       controller: semesterController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -100,6 +102,7 @@ class _UpdateModuleDialogState extends State<UpdateModuleDialog> {
                       keyboardType: TextInputType.number,
                       initalValue: widget.module.weighting.toString(),
                       label: 'Wichtung',
+                      textInputAction: TextInputAction.next,
                       controller: weightingController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -124,6 +127,7 @@ class _UpdateModuleDialogState extends State<UpdateModuleDialog> {
                       keyboardType: TextInputType.number,
                       initalValue: widget.module.grade.toString(),
                       label: 'Note',
+                      textInputAction: TextInputAction.done,
                       controller: gradeController,
                       validator: (value) {
                         if (value != null && value.isNotEmpty){

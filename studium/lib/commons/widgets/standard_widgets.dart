@@ -78,8 +78,9 @@ class TextFieldWidget extends StatelessWidget {
   TextEditingController? controller;
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
 
-  TextFieldWidget({super.key, required this.initalValue, required this.label, this.icon, this.validator, this.controller, this.keyboardType});
+  TextFieldWidget({super.key, required this.initalValue, required this.label, this.icon, this.validator, this.controller, this.keyboardType, this.textInputAction});
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +89,9 @@ class TextFieldWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: TextFormField(
+        textInputAction: textInputAction,
         keyboardType: keyboardType,
+        maxLines: 1,
         initialValue: null,
         decoration: InputDecoration(
           labelText: label,
