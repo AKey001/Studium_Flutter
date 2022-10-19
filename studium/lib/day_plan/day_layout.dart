@@ -29,7 +29,7 @@ class _DayLayoutState extends State<DayLayout> {
         btnActions: [
           IconButton(
             onPressed: () {
-              _selectDate(context, DateTime.now());
+              _selectDate(context);
             },
             icon: const Icon(Icons.search))
         ],
@@ -38,14 +38,8 @@ class _DayLayoutState extends State<DayLayout> {
     );
   }
 
-  void _selectDate(BuildContext context, DateTime initial) async {
-    final DateTime? newDate = await showDatePicker(
-      context: context,
-      initialDate: initial,
-      firstDate: DateTime(initial.year - 1, 1),
-      lastDate: DateTime(initial.year + 1, 7),
-      helpText: 'Tag wählen',
-    );
+  void _selectDate(BuildContext context) async {
+    final DateTime? newDate = await showDayDatePicker(context);
     if (newDate != null) {
       setState(() {
         widget.initialDate == null;

@@ -45,6 +45,8 @@ dependencies:
   shared_preferences: ^2.0.15
   flutter_launcher_icons: ^0.10.0
   syncfusion_flutter_charts: ^20.3.50
+  flutter_localizations:
+    sdk: flutter
 
 flutter_icons:
   image_path_android: "assets/images/ic_launcher.png"

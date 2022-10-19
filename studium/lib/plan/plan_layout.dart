@@ -24,14 +24,7 @@ class Plan extends StatelessWidget {
   }
 
   void _selectDate(BuildContext context) async {
-    DateTime initial = DateTime.now();
-    final DateTime? newDate = await showDatePicker(
-      context: context,
-      initialDate: initial,
-      firstDate: DateTime(initial.year - 1, 1),
-      lastDate: DateTime(initial.year + 1, 7),
-      helpText: 'Select a date',
-    );
+    final DateTime? newDate = await showDayDatePicker(context);
     if (newDate != null) {
       Navigator.push(
         context,

@@ -1,5 +1,6 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:studium/commons/providers/modules_list_provider.dart';
 import 'package:studium/commons/providers/prefs_provider.dart';
@@ -59,6 +60,13 @@ class Main extends StatelessWidget {
         );
 
         return MaterialApp(
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate
+          ],
+          supportedLocales: const [
+            Locale('en'),
+            Locale('de')
+          ],
           themeMode: thememodes[themeMode],
           theme: lightThemedata.copyWith(
             textTheme: buildTextTheme(lightThemedata.textTheme),

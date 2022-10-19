@@ -137,3 +137,15 @@ class DisabledBackground extends StatelessWidget {
     );
   }
 }
+
+Future<DateTime?> showDayDatePicker(BuildContext context) async {
+  DateTime initial = DateTime.now();
+  return await showDatePicker(
+    context: context,
+    initialDate: initial,
+    firstDate: DateTime(initial.year - 1, 1),
+    lastDate: DateTime(initial.year + 1, 7),
+    helpText: 'Tag wählen',
+    locale: const Locale("de", "DE"),
+  );
+}
