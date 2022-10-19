@@ -79,7 +79,7 @@ class _UpdateModuleDialogState extends State<UpdateModuleDialog> {
                 children: [
                   Expanded(
                     child: TextFieldWidget(
-                      keyboardType: const TextInputType.numberWithOptions(decimal: false),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: true),
                       initalValue: widget.module.semester.toString(),
                       label: 'Semester',
                       textInputAction: TextInputAction.next,
@@ -99,7 +99,7 @@ class _UpdateModuleDialogState extends State<UpdateModuleDialog> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: TextFieldWidget(
-                      keyboardType: const TextInputType.numberWithOptions(decimal: false),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: true),
                       initalValue: widget.module.weighting.toString(),
                       label: 'Wichtung',
                       textInputAction: TextInputAction.next,
@@ -124,7 +124,7 @@ class _UpdateModuleDialogState extends State<UpdateModuleDialog> {
                 children: [
                   Expanded(
                     child: TextFieldWidget(
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
                       initalValue: widget.module.grade.toString(),
                       label: 'Note',
                       textInputAction: TextInputAction.done,

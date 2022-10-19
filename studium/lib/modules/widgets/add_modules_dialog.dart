@@ -78,7 +78,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
                 children: [
                   Expanded(
                     child: TextFieldWidget(
-                      keyboardType: const TextInputType.numberWithOptions(decimal: false),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: true),
                       initalValue: '',
                       label: 'Semester',
                       textInputAction: TextInputAction.next,
@@ -98,7 +98,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: TextFieldWidget(
-                      keyboardType: const TextInputType.numberWithOptions(decimal: false),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: true),
                       initalValue: '',
                       label: 'Wichtung',
                       textInputAction: TextInputAction.next,
@@ -123,7 +123,7 @@ class _AddModuleDialogState extends State<AddModuleDialog> {
                 children: [
                   Expanded(
                     child: TextFieldWidget(
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
                       initalValue: '',
                       label: 'Note',
                       textInputAction: TextInputAction.done,
