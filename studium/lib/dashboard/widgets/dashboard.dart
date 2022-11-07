@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:studium/dashboard/widgets/average_card.dart';
 import 'package:studium/dashboard/widgets/modules_card.dart';
 import 'package:studium/dashboard/widgets/progress_card.dart';
@@ -9,18 +10,30 @@ class DashboardListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ResponsiveWrapperData responsiveData = ResponsiveWrapper.of(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: ListView(
         padding: const EdgeInsets.only(bottom: 12, top: 8),
-        children: const <Widget>[
-          ResultCardWidget(),
-          SizedBox(height: 4),
-          AverageCardWidget(),
-          SizedBox(height: 4),
-          ModulesCardWidget(),
-          SizedBox(height: 4),
-          ProgressCardWidget(),
+        children: <Widget>[
+          ResponsiveRowColumn(
+            layout: responsiveData.isSmallerThan(TABLET) ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
+            children: const [
+              ResponsiveRowColumnItem(
+                rowFlex: 1,
+                child: ResultCardWidget(),
+              ),
+              ResponsiveRowColumnItem(
+                rowFlex: 1,
+                child: AverageCardWidget(),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          const ModulesCardWidget(),
+          const SizedBox(height: 4),
+          const ProgressCardWidget(),
         ],
       ),
     );

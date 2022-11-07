@@ -11,7 +11,8 @@ class AverageCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        // mainAxisSize: MainAxisSize.min,
+
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const <Widget>[
           ListTile(
@@ -22,7 +23,8 @@ class AverageCardWidget extends StatelessWidget {
               padding: EdgeInsets.only(
                   left: 16.0,
                   right: 16.0,
-                  bottom: 8.0
+                  top: 4,
+                  bottom: 16.0
               ),
               child: AverageText(),
           ),

@@ -31,22 +31,25 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
-  html: ^0.15.0
+  html: ^0.15.1
   http: ^0.13.5
   requests: ^4.7.0
   week_of_year: ^2.0.0
   fl_chart: ^0.55.2
-  sqflite: ^2.1.0+1
+  sqflite: ^2.2.0+3
   path: ^1.8.2
   collection: ^1.16.0
   dynamic_color: ^1.5.4
   provider: ^6.0.4
   shared_preferences: ^2.0.15
   flutter_launcher_icons: ^0.10.0
-  syncfusion_flutter_charts: ^20.3.50
-  flutter_localizations:
-    sdk: flutter
+  syncfusion_flutter_charts: ^20.3.52
+  flutter_adaptive_scaffold: ^0.0.8
+  responsive_framework: ^0.2.0
+
 
 flutter_icons:
   image_path_android: "assets/images/ic_launcher.png"

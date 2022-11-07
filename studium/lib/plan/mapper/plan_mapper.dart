@@ -26,11 +26,11 @@ PlanModel mapRawHtml(String html) {
 
     for (Element rawEntry in rawEntries) {
       TableEntry tableEntry = TableEntry();
-      tableEntry.time = rawEntry.getElementsByClassName('tabhead_blue').first.innerHtml.replaceAll('Uhr', '').replaceAll(' bis ', '\nbis\n').trim();
+      tableEntry.time = rawEntry.getElementsByClassName('tabhead_blue').first.innerHtml.replaceAll('Uhr', '').trim();
       tableEntry.module = rawEntry.getElementsByClassName('tabcell_blue3').first.innerHtml.trim();
       tableEntry.room = rawEntry.getElementsByClassName('tabcell_blue2')[1].children[0].innerHtml.trim();
       tableEntry.type = rawEntry.getElementsByClassName('tabcell_blue')[1].innerHtml.trim();
-      tableEntry.teacher = _extractTeacherNames(rawEntry.getElementsByClassName('tabcell_blue2').first.children);
+      tableEntry.teacher = _extractTeacherNames(rawEntry.getElementsByClassName('tabcell_blue2').first.children).trim();
       entriesOfDay.add(tableEntry);
     }
     _mapRawEntryToDay(plan, day!, entriesOfDay);

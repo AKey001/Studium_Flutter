@@ -35,10 +35,13 @@ class EntryListTableWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(_tableEntry.type),
+      title: Text(_tableEntry.type,
+        maxLines: 1,
+        overflow: TextOverflow.fade,
+        softWrap: false,),
       subtitle: Text('${_tableEntry.module}\n${_tableEntry.teacher}'),
       isThreeLine: true,
-      leading: Text(_tableEntry.time),
+      leading: Text(_tableEntry.time.replaceAll(' bis ', '\nbis\n').trim()),
       trailing: Text(_tableEntry.room),
     );
   }

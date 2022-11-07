@@ -2,6 +2,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:studium/commons/providers/modules_list_provider.dart';
 import 'package:studium/commons/providers/prefs_provider.dart';
 import 'package:studium/main_layout.dart';
@@ -77,6 +78,15 @@ class Main extends StatelessWidget {
             scaffoldBackgroundColor: darkThemedata.colorScheme.background,
           ),
           home: const HomeLayout(),
+          builder: (context, child) => ResponsiveWrapper.builder(
+            child,
+            minWidth: 300,
+            defaultName: MOBILE,
+            breakpoints: const [
+              ResponsiveBreakpoint.resize(450, name: MOBILE),
+              ResponsiveBreakpoint.resize(600, name: TABLET),
+            ]
+          ),
         );
       },
     );
