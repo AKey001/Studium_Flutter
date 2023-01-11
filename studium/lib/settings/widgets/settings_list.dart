@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studium/commons/providers/prefs_provider.dart';
@@ -32,12 +34,14 @@ class SettingsList extends StatelessWidget {
               });
           },
         ),
-        SwitchListTile(
-          title: const Text('Dynamische Farben'),
-          subtitle: const Text("Dynamische Farben werden ab Android 12 unterstützt und passen das App-Theme an das Android Theme an."),
-          onChanged: (value) => context.read<SharedPrefsProvider>().saveDynamicMode(value),
-          value: dynamicMode,
-        ),
+        Platform.isAndroid
+            ? SwitchListTile(
+                title: const Text('Dynamische Farben'),
+                subtitle: const Text("Dynamische Farben werden ab Android 12 unterstützt und passen das App-Theme an das Android Theme an."),
+                onChanged: (value) => context.read<SharedPrefsProvider>().saveDynamicMode(value),
+                value: dynamicMode,
+              )
+            : const SizedBox(),
         const ListTile(
           subtitle: Text('Stundenplan'),
         ),
