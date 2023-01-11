@@ -32,13 +32,14 @@ class Main extends StatelessWidget {
     context.read<ModulesListProvider>().init();
     context.read<SharedPrefsProvider>().init();
     int themeMode = context.watch<SharedPrefsProvider>().displayMode;
+    bool dynamicMode = context.watch<SharedPrefsProvider>().dynamicMode;
 
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
         ColorScheme lightScheme;
         ColorScheme darkScheme;
 
-        if (lightDynamic != null && darkDynamic != null) {
+        if (lightDynamic != null && darkDynamic != null && dynamicMode) {
           lightScheme = lightDynamic.harmonized();
           lightCustomColors = lightCustomColors.harmonized(lightScheme);
 

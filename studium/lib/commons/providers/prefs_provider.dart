@@ -5,11 +5,14 @@ import 'package:studium/commons/keys/prefs.dart';
 class SharedPrefsProvider with ChangeNotifier {
   int _displayMode = 0;
   bool _displayTypeWeek = false;
+  bool _dynamicMode = true;
   String _matrikel = 'IIBb20';
 
   int get displayMode => _displayMode;
 
   bool get displayTypeWeek => _displayTypeWeek;
+
+  bool get dynamicMode => _dynamicMode;
 
   String get matrikel => _matrikel;
 
@@ -17,6 +20,7 @@ class SharedPrefsProvider with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _matrikel = prefs.getString(PrefKeys.matrikel.name) ?? 'IIBb20';
     _displayTypeWeek = prefs.getBool(PrefKeys.displayTypeWeek.name) ?? false;
+    _dynamicMode = prefs.getBool(PrefKeys.dynamicMode.name) ?? true;
     _displayMode = prefs.getInt(PrefKeys.displayMode.name) ?? 0;
   }
 
@@ -24,6 +28,13 @@ class SharedPrefsProvider with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(PrefKeys.displayTypeWeek.name, type);
     _displayTypeWeek = type;
+    notifyListeners();
+  }
+
+  void saveDynamicMode(bool type) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool(PrefKeys.dynamicMode.name, type);
+    _dynamicMode = type;
     notifyListeners();
   }
 

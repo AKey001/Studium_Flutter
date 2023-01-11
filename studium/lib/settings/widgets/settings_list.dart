@@ -15,14 +15,15 @@ class SettingsList extends StatelessWidget {
     String matrikel = context.watch<SharedPrefsProvider>().matrikel;
     bool displayTypeWeek = context.watch<SharedPrefsProvider>().displayTypeWeek;
     int displayMode = context.watch<SharedPrefsProvider>().displayMode;
+    bool dynamicMode = context.watch<SharedPrefsProvider>().dynamicMode;
 
     return ListView(
       children: <Widget>[
         const ListTile(
-          subtitle: Text('Allgemein'),
+          subtitle: Text('Erscheinungsbild'),
         ),
         ListTile(
-          title: const Text('Erscheinungsbild'),
+          title: const Text('Designstil'),
           subtitle: Text(_displayModes[displayMode]),
           onTap: () {
             showDialog(context: context,
@@ -30,6 +31,12 @@ class SettingsList extends StatelessWidget {
                 return const DisplayModeAlert();
               });
           },
+        ),
+        SwitchListTile(
+          title: const Text('Dynamische Farben'),
+          subtitle: const Text("Dynamische Farben werden ab Android 12 unterstützt und passen das App-Theme an das Android Theme an."),
+          onChanged: (value) => context.read<SharedPrefsProvider>().saveDynamicMode(value),
+          value: dynamicMode,
         ),
         const ListTile(
           subtitle: Text('Stundenplan'),
