@@ -3,19 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:studium/commons/db/database.dart';
+import 'package:studium/commons/keys/prefs.dart';
 import 'package:studium/commons/providers/modules_list_provider.dart';
 import 'package:studium/commons/providers/prefs_provider.dart';
 import 'package:studium/main_layout.dart';
+import 'package:studium/modules/models/models.dart';
 import 'package:studium/theme/color_schemes.g.dart';
-import 'package:studium/theme/custom_color.g.dart';
 import 'package:studium/theme/theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String matrikel = prefs.getString(PrefKeys.matrikel.name) ?? 'IIBb20';
+  bool displayTypeWeek = prefs.getBool(PrefKeys.displayTypeWeek.name) ?? false;
+  bool dynamicMode = prefs.getBool(PrefKeys.dynamicMode.name) ?? true;
+  int displayMode = prefs.getInt(PrefKeys.displayMode.name) ?? 0;
+
+  List<Module> modules = await AppDatabase.loadAllModules();
+
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ModulesListProvider()),
-        ChangeNotifierProvider(create: (_) => SharedPrefsProvider()),
+        ChangeNotifierProvider(create: (_) => ModulesListProvider(modules)),
+        ChangeNotifierProvider(create: (_) => SharedPrefsProvider(displayMode, displayTypeWeek, dynamicMode, matrikel)),
       ],
       child: const Main(),
     ),
@@ -29,9 +42,7 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<ModulesListProvider>().init();
-    context.read<SharedPrefsProvider>().init();
-    int themeMode = context.watch<SharedPrefsProvider>().displayMode;
+     int themeMode = context.watch<SharedPrefsProvider>().displayMode;
     bool dynamicMode = context.watch<SharedPrefsProvider>().dynamicMode;
 
     return DynamicColorBuilder(
@@ -41,10 +52,7 @@ class Main extends StatelessWidget {
 
         if (lightDynamic != null && darkDynamic != null && dynamicMode) {
           lightScheme = lightDynamic.harmonized();
-          lightCustomColors = lightCustomColors.harmonized(lightScheme);
-
           darkScheme = darkDynamic.harmonized();
-          darkCustomColors = darkCustomColors.harmonized(darkScheme);
         } else {
           lightScheme = lightColorScheme;
           darkScheme = darkColorScheme;
@@ -53,12 +61,10 @@ class Main extends StatelessWidget {
         ThemeData lightThemedata = ThemeData(
           useMaterial3: true,
           colorScheme: lightScheme,
-          extensions: [lightCustomColors],
         );
         ThemeData darkThemedata = ThemeData(
           useMaterial3: true,
           colorScheme: darkScheme,
-          extensions: [darkCustomColors],
         );
 
         return MaterialApp(

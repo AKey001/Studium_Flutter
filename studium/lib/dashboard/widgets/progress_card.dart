@@ -11,15 +11,14 @@ import 'package:studium/dashboard/chart/models/lines.dart';
 import 'package:studium/dashboard/chart/models/tooltip.dart';
 import 'package:studium/dashboard/mapper/result_calculator.dart';
 import 'package:studium/modules/models/models.dart';
-import 'package:studium/theme/custom_color.g.dart';
 
 class ProgressCardWidget extends StatelessWidget {
   const ProgressCardWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Color color1 = Theme.of(context).extension<CustomColors>()!.chartbrown ?? Colors.brown;
-    final Color color2 = Theme.of(context).colorScheme.primary;
+    final Color color1 = Theme.of(context).colorScheme.primary;
+    final Color color2 = Theme.of(context).colorScheme.tertiary;
 
     return Card(
       child: Column(
@@ -33,20 +32,20 @@ class ProgressCardWidget extends StatelessWidget {
                  Text(
                    'Urteil',
                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                         color: color2,
+                         color: color1,
                      )
                  ),
                  const Text(' | '),
                  Text(
                      'Durschnitt',
                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                       color: color1,
+                       color: color2,
                      )
                  ),
                ],
               ),
             ),
-            Chart(color1, color2),
+            Chart(color2, color1),
         ],
       ),
     );

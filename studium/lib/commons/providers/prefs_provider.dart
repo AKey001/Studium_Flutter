@@ -16,13 +16,8 @@ class SharedPrefsProvider with ChangeNotifier {
 
   String get matrikel => _matrikel;
 
-  void init() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _matrikel = prefs.getString(PrefKeys.matrikel.name) ?? 'IIBb20';
-    _displayTypeWeek = prefs.getBool(PrefKeys.displayTypeWeek.name) ?? false;
-    _dynamicMode = prefs.getBool(PrefKeys.dynamicMode.name) ?? true;
-    _displayMode = prefs.getInt(PrefKeys.displayMode.name) ?? 0;
-  }
+  SharedPrefsProvider(this._displayMode, this._displayTypeWeek,
+      this._dynamicMode, this._matrikel);
 
   void saveDisplayTypeWeek(bool type) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

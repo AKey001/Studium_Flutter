@@ -17,6 +17,9 @@ class ModulesListProvider with ChangeNotifier {
 
   List<Module> get modules => _modules;
 
+
+  ModulesListProvider(this._modules);
+
   void insert(Module module) async {
     await AppDatabase.insertModule(module);
     _modules = await AppDatabase.loadAllModules();
@@ -31,11 +34,6 @@ class ModulesListProvider with ChangeNotifier {
 
   void update(Module module) async {
     await AppDatabase.updateModule(module);
-    notifyListeners();
-  }
-
-  void init() async {
-    _modules = await AppDatabase.loadAllModules();
     notifyListeners();
   }
 }
