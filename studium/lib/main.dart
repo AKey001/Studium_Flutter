@@ -61,6 +61,7 @@ class Main extends StatelessWidget {
         );
 
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate
           ],

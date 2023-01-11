@@ -45,7 +45,9 @@ class _HomeLayoutState extends State<HomeLayout> with RestorationMixin {
                 selectedIndex: _selectedIndex.value,
                 onDestinationSelected: _onItemTapped,
               ),
-            const VerticalDivider(thickness: 1, width: 1),
+            responsiveData.isSmallerThan(TABLET)
+                ? const SizedBox(width: 0, height: 0,)
+                : const VerticalDivider(thickness: 1, width: 1),
             Expanded(
               child: IndexedStack(
                 index: _selectedIndex.value,

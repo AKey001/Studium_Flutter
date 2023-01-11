@@ -80,18 +80,20 @@ class EntryListWidget extends StatelessWidget {
           )
       );
        content.add(
-           Container(
-             width: double.infinity,
-             child: DataTable(
-               columns: const <DataColumn>[
-                 DataColumn(label: Text("Zeit")),
-                 DataColumn(label: Text("Veranstaltung")),
-                 DataColumn(label: Text("Modul")),
-                 DataColumn(label: Text("Dozent")),
-                 DataColumn(label: Text("Raum")),
-               ],
-               rows: buildRows(grouped[day] ?? []),
-             ),
+           Column(
+             crossAxisAlignment: CrossAxisAlignment.stretch,
+             children: [
+               DataTable(
+                 columns: const <DataColumn>[
+                   DataColumn(label: Text("Zeit")),
+                   DataColumn(label: Text("Veranstaltung")),
+                   DataColumn(label: Text("Modul")),
+                   DataColumn(label: Text("Dozent")),
+                   DataColumn(label: Text("Raum")),
+                 ],
+                 rows: buildRows(grouped[day] ?? []),
+               ),
+             ],
            )
        );
     }

@@ -123,27 +123,32 @@ class ModulesList extends StatelessWidget {
 
   // start of Datatable
   Widget buildTables(List entries, BuildContext context) {
-    return Container(
-        width: double.infinity,
-        child: DataTable(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        DataTable(
+          showCheckboxColumn: false,
           columns: const <DataColumn>[
             DataColumn(label: Text("Semester")),
             DataColumn(label: Text("Modul")),
             DataColumn(label: Text("Wichtung")),
             DataColumn(label: Text("Note")),
           ],
-          rows: buildRows(entries),
+          rows: buildRows(entries, context),
         ),
-      );
+      ],
+    );
   }
 
-  List<DataRow> buildRows(List entries) {
+  List<DataRow> buildRows(List entries, BuildContext context) {
     List<DataRow> rows = [];
 
     for (dynamic entry in entries) {
       if (entry is Module) {
         rows.add(
           DataRow(
+            onSelectChanged: (_) => onClick(context, entry),
+            onLongPress: () => onLongPress(context, entry),
             cells: <DataCell>[
               DataCell(Text(entry.semester.toString())),
               DataCell(Text(entry.name)),
