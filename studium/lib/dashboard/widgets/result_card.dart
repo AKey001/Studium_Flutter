@@ -42,7 +42,7 @@ class ResultTextRow extends StatelessWidget {
 
     String officialResult = '-.-';
     String additional = '';
-    if (value.isNotEmpty) {
+    if (value.isNotEmpty && calculateResult(value) != "${double.nan}") {
       String result = calculateResult(value);
       officialResult = result.substring(0, 3);
       additional = result.substring(3);

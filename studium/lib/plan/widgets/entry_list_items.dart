@@ -41,8 +41,14 @@ class EntryListTableWidget extends StatelessWidget {
         softWrap: false,),
       subtitle: Text('${_tableEntry.module}\n${_tableEntry.teacher}'),
       isThreeLine: true,
-      leading: Text(_tableEntry.time.replaceAll(' bis ', '\nbis\n').trim()),
-      trailing: Text(_tableEntry.room),
+      leading: Padding(
+        padding: const EdgeInsets.only(top: 4.5),
+        child: Text(_tableEntry.time.replaceAll(' bis ', '\nbis\n').trim()),
+      ),
+      trailing: Padding(
+        padding: const EdgeInsets.only(top: 4.5),
+        child: Text(_tableEntry.room),
+      ),
     );
   }
 }

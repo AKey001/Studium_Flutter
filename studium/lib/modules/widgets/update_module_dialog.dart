@@ -41,9 +41,12 @@ class _UpdateModuleDialogState extends State<UpdateModuleDialog> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     widget.module.name = moduleController.value.text;
-                    widget.module.grade = double.parse(gradeController.value.text);
                     widget.module.weighting = int.parse(weightingController.value.text);
                     widget.module.semester = int.parse(semesterController.value.text);
+                    widget.module.grade = null;
+                    if (gradeController.value.text.isNotEmpty) {
+                      widget.module.grade = double.parse(gradeController.value.text);
+                    }
 
                     context.read<ModulesListProvider>().update(widget.module);
                     Navigator.pop(context);
@@ -125,7 +128,7 @@ class _UpdateModuleDialogState extends State<UpdateModuleDialog> {
                   Expanded(
                     child: TextFieldWidget(
                       keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
-                      initalValue: widget.module.grade.toString(),
+                      initalValue: widget.module.grade == null ? "" : widget.module.grade.toString(),
                       label: 'Note',
                       textInputAction: TextInputAction.done,
                       controller: gradeController,

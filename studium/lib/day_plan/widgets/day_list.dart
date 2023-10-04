@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -6,10 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:studium/commons/network/data_fetcher.dart';
 import 'package:studium/commons/providers/prefs_provider.dart';
 import 'package:studium/commons/widgets/standard_widgets.dart';
+import 'package:studium/modules/entities/models.dart';
 import 'package:studium/plan/mapper/plan_mapper.dart';
 import 'package:studium/plan/models/models.dart';
 import 'package:studium/plan/widgets/entry_list_layout.dart';
-import 'package:week_of_year/date_week_extensions.dart';
 
 class DayList extends StatelessWidget {
   final DateTime dateTime;
@@ -19,16 +20,15 @@ class DayList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String matrikel = context.watch<SharedPrefsProvider>().matrikel;
-    int week = dateTime.weekOfYear;
 
     return FutureBuilder<http.Response>(
-      future: fetchData(week, matrikel),
+      future: fetchActivities(dateTime, dateTime, matrikel),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           if (snapshot.hasData) {
-            String? html = snapshot.data!.body;
-            PlanModel plan = mapRawHtml(html);
-            List<Entry> entries = mapToEntries(plan, DisplayType.single_day, date: dateTime);
+            String json = utf8.decode(snapshot.data!.bodyBytes);
+            final ActivityCollection activities = ActivityCollection.fromJson(jsonDecode(json));
+            List<Entry> entries = mapToEntries(activities, date: dateTime);
 
             return Stack(
               children: <Widget>[
@@ -41,9 +41,9 @@ class DayList extends StatelessWidget {
           }
         }
         if (snapshot.hasData) {
-          String? html = snapshot.data!.body;
-          PlanModel plan = mapRawHtml(html);
-          List<Entry> entries = mapToEntries(plan, DisplayType.single_day, date: dateTime);
+          String json = utf8.decode(snapshot.data!.bodyBytes);
+          final ActivityCollection activities = ActivityCollection.fromJson(jsonDecode(json));
+          List<Entry> entries = mapToEntries(activities, date: dateTime);
 
           return EntryListWidget(entries);
         } else if (snapshot.hasError) {

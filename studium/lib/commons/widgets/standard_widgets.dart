@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:studium/settings/settings_layout.dart';
 
@@ -31,7 +29,6 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       actions.add(
         PopupMenuButton(
             onSelected: (value) {
-              log('clicked');
               if (value == 1) {
                 Navigator.push(
                   context,

@@ -41,7 +41,7 @@ class AverageText extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Module> modules = context.watch<ModulesListProvider>().modules;
 
-    if (modules.isEmpty) {
+    if (modules.isEmpty || calculateAverageString(modules) == "${double.nan}") {
       return Text(
           '-.-',
           style: Theme.of(context).textTheme.headline2

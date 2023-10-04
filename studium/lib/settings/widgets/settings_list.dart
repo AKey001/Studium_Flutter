@@ -10,7 +10,7 @@ class SettingsList extends StatelessWidget {
   const SettingsList({Key? key}) : super(key: key);
 
   final List<String> _displayModes = const ['Systemstandard', 'Darkmode', 'Lightmode'];
-  final List<String> _displayTypes = const ['Heutiger und morgiger Tag werden angezeigt.', 'Gesamte Woche wird angezeigt.'];
+  final List<String> _displayTypes = const ['Heutiger und morgiger Tag werden angezeigt.', '7 Tage Vorschau wird angezeigt.'];
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class SettingsList extends StatelessWidget {
           },
         ),
         SwitchListTile(
-          title: const Text('Darstellung: Gesamte Woche'),
+          title: const Text('Darstellung: Woche'),
           subtitle: Text(_displayTypes[displayTypeWeek == true ? 1 : 0]),
           onChanged: (value) => context.read<SharedPrefsProvider>().saveDisplayTypeWeek(value),
           value: displayTypeWeek,
