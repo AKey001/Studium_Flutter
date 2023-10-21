@@ -49,6 +49,9 @@
 	<true/>
 
 	<key>com.apple.security.network.client</key>
-    <true/>
+    	<true/>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to files.</string>
 </dict>
 </plist>
