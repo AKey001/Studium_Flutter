@@ -7,12 +7,12 @@ class AppDatabase {
   static Future<Database> _init() async {
     String dbPath = join(await getDatabasesPath(), "ResultCalculator");
     return openDatabase(dbPath,
-      onCreate: (db, version) {
-        return db.execute(
-          'CREATE TABLE Module(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, grade FLOAT, weighting INTEGER, semester INTEGER)',
-        );
-      },
-      version: 4);
+        onCreate: (db, version) {
+          return db.execute(
+            'CREATE TABLE Module(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, grade FLOAT, weighting INTEGER, semester INTEGER)',
+          );
+        },
+        version: 4);
   }
 
   static Future<void> _close(Database db) async {
@@ -26,8 +26,20 @@ class AppDatabase {
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
+  static void _insertAll(List<Module> modules, Database db) async {
+    Batch batch = db.batch();
+    for (var module in modules) {
+      batch.insert(
+          'Module',
+          module.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace);
+    }
+    await batch.commit(noResult: true);
+  }
+
   static Future<List<Module>> _modules(Database db) async {
-    final List<Map<String, dynamic>> maps = await db.query('Module', orderBy: 'semester, weighting desc, name');
+    final List<Map<String, dynamic>> maps = await db.query(
+        'Module', orderBy: 'semester, weighting desc, name');
 
     return List.generate(maps.length, (i) {
       return Module(
@@ -67,6 +79,12 @@ class AppDatabase {
   static Future<void> insertModule(Module module) async {
     Database db = await _init();
     _insert(module, db);
+    _close(db);
+  }
+
+  static Future<void> insertModules(List<Module> modules) async {
+    Database db = await _init();
+    _insertAll(modules, db);
     _close(db);
   }
 

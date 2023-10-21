@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:studium/dashboard/chart/widgetes/titles.dart';
+import 'package:studium/dashboard/chart/widgets/titles.dart';
 
 FlTitlesData buildTitles(double minX, double maxX, double minY, double maxY) {
   return FlTitlesData(
@@ -15,7 +15,7 @@ FlTitlesData buildTitles(double minX, double maxX, double minY, double maxY) {
         getTitlesWidget: (double value, TitleMeta meta) {
           return leftTitleWidgets(value, meta, minX, maxX, minY, maxY);
         },
-        reservedSize: 38,
+        reservedSize: 30,
       ),
     ),
     topTitles: hideAxisTitle(),
@@ -27,7 +27,7 @@ FlTitlesData buildTitles(double minX, double maxX, double minY, double maxY) {
         child: Text('Semester'),
       ),
       sideTitles: SideTitles(showTitles: true,
-          reservedSize: 25,
+          reservedSize: 30,
           getTitlesWidget: bottomTitleWidgets),
     ),
   );

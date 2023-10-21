@@ -5,17 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:studium/dashboard/chart/methods/reverse_mapper.dart';
 
 Widget leftTitleWidgets(double value, TitleMeta meta, double minX, double maxX, double minY, double maxY) {
-  final intValue = reverseY(value, minX, maxX).toInt();
+  final reversedValue = reverseY(value, minX, maxX);
 
-  if (intValue == (maxY + minY)) {
-    log('$intValue == ${maxY + minY}');
-    return const Text('');
+  if (reversedValue.toInt() == (maxY + minY)) {
+    log('$reversedValue == ${maxY + minY}');
+    return Container();
+  }
+
+  if ((reversedValue * 100).toInt() % 100 != 0) {
+    return Container();
   }
 
   return Padding(
     padding: const EdgeInsets.only(right: 6),
     child: Text(
-      intValue.toString(),
+      reversedValue.toInt().toString(),
       textAlign: TextAlign.center,
     ),
   );

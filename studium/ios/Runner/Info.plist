@@ -50,5 +50,10 @@
 
 	<key>com.apple.security.network.client</key>
     <true/>
+
+    <key>UISupportsDocumentBrowser</key>
+    <false/>
+    <key>LSSupportsOpeningDocumentsInPlace</key>
+    <true/>
 </dict>
 </plist>

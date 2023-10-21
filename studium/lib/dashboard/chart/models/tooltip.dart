@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-LineTouchData buildTooltip(BuildContext context, List<FlSpot> result, List<FlSpot> average, Color color1, Color color2) {
+LineTouchData buildLineTooltip(BuildContext context, List<FlSpot> result, List<FlSpot> average, Color color1, Color color2) {
   return LineTouchData(
       enabled: true,
       touchTooltipData: LineTouchTooltipData(
@@ -41,3 +41,27 @@ List<TouchedSpotIndicatorData> _getTouchSpotIndicator(LineChartBarData barData, 
     },
   ).toList();
 }
+
+BarTouchData buildBarTooltip(BuildContext context, Color color) {
+  return BarTouchData(
+    enabled: true,
+    touchTooltipData: BarTouchTooltipData(
+      tooltipBgColor: Colors.transparent,
+      fitInsideHorizontally: true,
+      tooltipPadding: EdgeInsets.zero,
+      tooltipMargin: 0,
+      getTooltipItem: (
+          BarChartGroupData group,
+          int groupIndex,
+          BarChartRodData rod,
+          int rodIndex,
+          ) {
+        return BarTooltipItem(
+          rod.toY.round().toString(),
+            Theme.of(context).textTheme.labelSmall ?? const TextStyle(),
+        );
+      },
+    ),
+  );
+}
+

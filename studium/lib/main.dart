@@ -17,7 +17,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String matrikel = prefs.getString(PrefKeys.matrikel.name) ?? 'IIBb20';
+  String matrikel = prefs.getString(PrefKeys.matrikel.name) ?? 'IIm23';
   bool displayTypeWeek = prefs.getBool(PrefKeys.displayTypeWeek.name) ?? false;
   bool dynamicMode = prefs.getBool(PrefKeys.dynamicMode.name) ?? true;
   int displayMode = prefs.getInt(PrefKeys.displayMode.name) ?? 0;

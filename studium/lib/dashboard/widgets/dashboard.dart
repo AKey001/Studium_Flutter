@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:studium/dashboard/widgets/amount_card.dart';
 import 'package:studium/dashboard/widgets/average_card.dart';
 import 'package:studium/dashboard/widgets/modules_card.dart';
 import 'package:studium/dashboard/widgets/progress_card.dart';
@@ -34,6 +35,8 @@ class DashboardListWidget extends StatelessWidget {
           const ModulesCardWidget(),
           const SizedBox(height: 4),
           const ProgressCardWidget(),
+          const SizedBox(height: 4),
+          const AmountCardWidget(),
         ],
       ),
     );

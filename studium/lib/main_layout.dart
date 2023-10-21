@@ -70,6 +70,7 @@ class _HomeLayoutState extends State<HomeLayout> with RestorationMixin {
               buildBottomNavigationBarItem(Icons.dashboard, 'Dashboard'),
               buildBottomNavigationBarItem(Icons.list, 'Module')
             ],
+        indicatorColor: Theme.of(context).colorScheme.primaryContainer,
           )
         : null,
 

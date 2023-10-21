@@ -30,14 +30,14 @@ class ProgressCardWidget extends StatelessWidget {
               subtitle: Row(
                children: [
                  Text(
-                   'Urteil',
+                   'Gesamturteil',
                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
                          color: color1,
                      )
                  ),
                  const Text(' | '),
                  Text(
-                     'Durschnitt',
+                     'Durchschnitt',
                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
                        color: color2,
                      )
@@ -104,7 +104,7 @@ class ChartWidget extends StatelessWidget {
           LineChartData(
             minY: _minY,
             maxY: _maxY,
-            lineTouchData: buildTooltip(context, result, average, color1, color2),
+            lineTouchData: buildLineTooltip(context, result, average, color1, color2),
             lineBarsData: buildLines(context, reverseSpots(average, _minY, _maxY), reverseSpots(result, _minY, _maxY), color1, color2),
             titlesData: buildTitles(_minX, _maxX, _minY, _maxY),
             gridData: buildGrid(_minY, _maxY),

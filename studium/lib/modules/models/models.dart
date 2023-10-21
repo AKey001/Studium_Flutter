@@ -1,7 +1,4 @@
-enum ModuleEntryType {
-  module,
-  section
-}
+enum ModuleEntryType { module, section }
 
 abstract class ModuleEntry {
   ModuleEntryType getType();
@@ -14,7 +11,12 @@ class Module {
   int weighting;
   int semester;
 
-  Module({required this.name, required this.grade, required this.weighting, required this.semester, this.id});
+  Module(
+      {required this.name,
+      required this.grade,
+      required this.weighting,
+      required this.semester,
+      this.id});
 
   Map<String, dynamic> toMap() {
     return {
@@ -28,5 +30,13 @@ class Module {
   @override
   String toString() {
     return 'Module{id: $id, name: $name, grade: $grade, weighting: $weighting, semester: $semester';
+  }
+
+  List<dynamic> toCsvLine() {
+    return [name, grade, weighting, semester];
+  }
+
+  static List<String> attributes() {
+    return ["name", "grade", "weighting", "semester"];
   }
 }

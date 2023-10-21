@@ -25,6 +25,12 @@ class ModulesListProvider with ChangeNotifier {
     _modules = await AppDatabase.loadAllModules();
     notifyListeners();
   }
+
+  void insertAll(List<Module> modules) async {
+    await AppDatabase.insertModules(modules);
+    _modules = await AppDatabase.loadAllModules();
+    notifyListeners();
+  }
   
   void delete(Module module) async {
     await AppDatabase.deleteModule(module);
