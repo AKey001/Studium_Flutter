@@ -10,9 +10,9 @@ class EntryListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ResponsiveWrapperData responsiveData = ResponsiveWrapper.of(context);
+    final ResponsiveBreakpointsData responsiveData = ResponsiveBreakpoints.of(context);
 
-    if (responsiveData.isSmallerThan(TABLET)) {
+    if (responsiveData.isMobile) {
       return ListView.builder(
             itemCount: _entries.length,
             itemBuilder: (context, index) {

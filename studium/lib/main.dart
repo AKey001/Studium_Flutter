@@ -28,7 +28,9 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ModulesListProvider(modules)),
-        ChangeNotifierProvider(create: (_) => SharedPrefsProvider(displayMode, displayTypeWeek, dynamicMode, matrikel)),
+        ChangeNotifierProvider(
+            create: (_) => SharedPrefsProvider(
+                displayMode, displayTypeWeek, dynamicMode, matrikel)),
       ],
       child: const Main(),
     ),
@@ -36,13 +38,17 @@ void main() async {
 }
 
 class Main extends StatelessWidget {
-  final List<ThemeMode> thememodes = const [ThemeMode.system, ThemeMode.dark, ThemeMode.light];
+  final List<ThemeMode> thememodes = const [
+    ThemeMode.system,
+    ThemeMode.dark,
+    ThemeMode.light
+  ];
 
   const Main({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-     int themeMode = context.watch<SharedPrefsProvider>().displayMode;
+    int themeMode = context.watch<SharedPrefsProvider>().displayMode;
     bool dynamicMode = context.watch<SharedPrefsProvider>().dynamicMode;
 
     return DynamicColorBuilder(
@@ -69,13 +75,8 @@ class Main extends StatelessWidget {
 
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate
-          ],
-          supportedLocales: const [
-            Locale('en'),
-            Locale('de_DE')
-          ],
+          localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
+          supportedLocales: const [Locale('en'), Locale('de_DE')],
           themeMode: thememodes[themeMode],
           theme: lightThemedata.copyWith(
             textTheme: buildTextTheme(lightThemedata.textTheme),
@@ -86,20 +87,24 @@ class Main extends StatelessWidget {
             scaffoldBackgroundColor: darkThemedata.colorScheme.background,
           ),
           home: const HomeLayout(),
-          builder: (context, child) => ResponsiveWrapper.builder(
-            child,
-            minWidth: 300,
-            defaultName: MOBILE,
-            breakpoints: const [
-              ResponsiveBreakpoint.resize(450, name: MOBILE),
-              ResponsiveBreakpoint.resize(600, name: TABLET),
-            ]
+          // builder: (context, child) => ResponsiveWrapper.builder(
+          //   child,
+          //   minWidth: 300,
+          //   defaultName: MOBILE,
+          //   breakpoints: const [
+          //     ResponsiveBreakpoint.resize(450, name: MOBILE),
+          //     ResponsiveBreakpoint.resize(600, name: TABLET),
+          //   ]
+          // ),
+          builder: (context, child) => ResponsiveBreakpoints(
+              breakpoints: const [
+                Breakpoint(start: 0, end: 450, name: MOBILE),
+                Breakpoint(start: 451, end: double.infinity, name: TABLET),
+              ],
+              child: child!,
           ),
         );
       },
     );
   }
 }
-
-
-

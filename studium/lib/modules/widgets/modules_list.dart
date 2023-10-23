@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 import 'package:studium/commons/providers/modules_list_provider.dart';
 import 'package:studium/modules/models/models.dart';
 import 'package:studium/modules/widgets/update_module_dialog.dart';
@@ -20,10 +20,10 @@ class ModulesList extends StatelessWidget {
         ),
       );
     } else {
-      final ResponsiveWrapperData responsiveData = ResponsiveWrapper.of(context);
+      final ResponsiveBreakpointsData responsiveData = ResponsiveBreakpoints.of(context);
 
       List entries =  processModules(modules);
-      if (responsiveData.isSmallerThan(TABLET)) {
+      if (responsiveData.isMobile) {
         return ListView.builder(
           itemCount: entries.length,
           itemBuilder: (context, index) {

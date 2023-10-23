@@ -11,7 +11,7 @@ class DashboardListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ResponsiveWrapperData responsiveData = ResponsiveWrapper.of(context);
+    final ResponsiveBreakpointsData responsiveData = ResponsiveBreakpoints.of(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -19,7 +19,7 @@ class DashboardListWidget extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 12, top: 8),
         children: <Widget>[
           ResponsiveRowColumn(
-            layout: responsiveData.isSmallerThan(TABLET) ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
+            layout: responsiveData.isMobile ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
             children: const [
               ResponsiveRowColumnItem(
                 rowFlex: 1,

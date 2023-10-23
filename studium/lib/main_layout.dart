@@ -24,13 +24,13 @@ class _HomeLayoutState extends State<HomeLayout> with RestorationMixin {
 
   @override
   Widget build(BuildContext context) {
-    final ResponsiveWrapperData responsiveData = ResponsiveWrapper.of(context);
+    final ResponsiveBreakpointsData responsiveData = ResponsiveBreakpoints.of(context);
 
     return Scaffold(
       body: SafeArea(
         child: Row(
           children: [
-            responsiveData.isSmallerThan(TABLET)
+            responsiveData.isMobile
             ? const SizedBox(width: 0, height: 0,)
             : NavigationRail(
               backgroundColor: Theme.of(context).colorScheme.background,
@@ -45,7 +45,7 @@ class _HomeLayoutState extends State<HomeLayout> with RestorationMixin {
                 selectedIndex: _selectedIndex.value,
                 onDestinationSelected: _onItemTapped,
               ),
-            responsiveData.isSmallerThan(TABLET)
+            responsiveData.isMobile
                 ? const SizedBox(width: 0, height: 0,)
                 : const VerticalDivider(thickness: 1, width: 1),
             Expanded(
@@ -61,7 +61,7 @@ class _HomeLayoutState extends State<HomeLayout> with RestorationMixin {
           ],
         ),
       ),
-      bottomNavigationBar: responsiveData.isSmallerThan(TABLET)
+      bottomNavigationBar: responsiveData.isMobile
         ? NavigationBar(
             onDestinationSelected: _onItemTapped,
             selectedIndex: _selectedIndex.value,
