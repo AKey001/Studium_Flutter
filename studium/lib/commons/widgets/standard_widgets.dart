@@ -7,7 +7,11 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final List<PopupMenuEntry> popupActions;
   final bool showSettingsItem;
 
-  const AppBarWidget(this._title, {this.btnActions = const [], this.popupActions = const [], this.showSettingsItem = true, super.key});
+  const AppBarWidget(this._title,
+      {this.btnActions = const [],
+      this.popupActions = const [],
+      this.showSettingsItem = true,
+      super.key});
 
   @override
   PreferredSizeWidget build(BuildContext context) {
@@ -32,29 +36,28 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
               if (value == 1) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SettingsLayout()),
+                  MaterialPageRoute(
+                      builder: (context) => const SettingsLayout()),
                 );
               }
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-              ...allPopupActions,
-            ]
-        ),
+                  ...allPopupActions,
+                ]),
       );
     }
 
     return AppBar(
-      title: Text(_title),
-      // elevation: 2,
-      // scrolledUnderElevation: 0,
-      shadowColor: Theme.of(context).colorScheme.shadow,
-      actions: actions
+        title: Text(_title),
+        // elevation: 2,
+        // scrolledUnderElevation: 0,
+        shadowColor: Theme.of(context).colorScheme.shadow,
+        actions: actions,
     );
   }
 
   @override
   Size get preferredSize => AppBar().preferredSize;
-
 }
 
 class ProgressWidget extends StatelessWidget {
@@ -77,12 +80,20 @@ class TextFieldWidget extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
 
-  TextFieldWidget({super.key, required this.initalValue, required this.label, this.icon, this.validator, this.controller, this.keyboardType, this.textInputAction});
+  TextFieldWidget(
+      {super.key,
+      required this.initalValue,
+      required this.label,
+      this.icon,
+      this.validator,
+      this.controller,
+      this.keyboardType,
+      this.textInputAction});
 
   @override
   Widget build(BuildContext context) {
     controller == null ? controller = TextEditingController() : null;
-    controller?.value =  TextEditingValue(text: initalValue);
+    controller?.value = TextEditingValue(text: initalValue);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: TextFormField(
@@ -111,11 +122,12 @@ class CustomErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(padding: EdgeInsets.all(24),
+      child: Container(
+        padding: EdgeInsets.all(24),
         child: Text(
           'Fehler: $error',
           style: TextStyle(
-            color:  Theme.of(context).colorScheme.error,
+            color: Theme.of(context).colorScheme.error,
           ),
         ),
       ),

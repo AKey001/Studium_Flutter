@@ -74,7 +74,7 @@ class Main extends StatelessWidget {
           ],
           supportedLocales: const [
             Locale('en'),
-            Locale('de')
+            Locale('de_DE')
           ],
           themeMode: thememodes[themeMode],
           theme: lightThemedata.copyWith(
