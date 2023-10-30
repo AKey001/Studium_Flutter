@@ -1,7 +1,6 @@
 enum EntryType {
   titleDay,
-  tableEntry,
-  infoEntry
+  tableEntry
 }
 
 abstract class Entry {
@@ -31,18 +30,5 @@ class TableEntry extends Entry {
   @override
   EntryType getType() {
     return EntryType.tableEntry;
-  }
-}
-
-class InfoEntry extends Entry {
-  final String _info;
-
-  InfoEntry(this._info);
-
-  String get info => _info;
-
-  @override
-  EntryType getType() {
-    return EntryType.infoEntry;
   }
 }

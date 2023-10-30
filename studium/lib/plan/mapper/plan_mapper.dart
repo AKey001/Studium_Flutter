@@ -7,7 +7,7 @@ List<Entry> mapToEntries(ActivityCollection? activities, {DateTime? date}) {
 
   for (var day in activities!.days) {
     entries.add(TitleEntry(calculateDayName(day.date.weekday)));
-    day.activities.isEmpty ? entries.add(InfoEntry("Freier Tag")) : entries.addAll(mapDayActivities(day.activities));
+    entries.addAll(mapDayActivities(day.activities));
   }
 
   return entries;

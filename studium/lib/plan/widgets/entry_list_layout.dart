@@ -10,26 +10,30 @@ class EntryListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ResponsiveBreakpointsData responsiveData = ResponsiveBreakpoints.of(context);
+    final ResponsiveBreakpointsData responsiveData =
+        ResponsiveBreakpoints.of(context);
+
+    if (_entries.isEmpty) {
+      return const Center(
+          child: Text("Keine Enträge im gesuchten Zeitraum")
+      );
+    }
 
     if (responsiveData.isMobile) {
       return ListView.builder(
-            itemCount: _entries.length,
-            itemBuilder: (context, index) {
-              final entry = _entries[index];
-              switch (entry.getType()) {
-                case EntryType.titleDay:
-                  TitleEntry titleEntry = entry as TitleEntry;
-                  return EntryListTitleWidget(titleEntry.title);
-                case EntryType.tableEntry:
-                  TableEntry tableEntry = entry as TableEntry;
-                  return EntryListTableWidget(tableEntry);
-                case EntryType.infoEntry:
-                  InfoEntry infoEntry = entry as InfoEntry;
-                  return EntryListInfoWidget(infoEntry.info);
-              }
-            },
-          );
+        itemCount: _entries.length,
+        itemBuilder: (context, index) {
+          final entry = _entries[index];
+          switch (entry.getType()) {
+            case EntryType.titleDay:
+              TitleEntry titleEntry = entry as TitleEntry;
+              return EntryListTitleWidget(titleEntry.title);
+            case EntryType.tableEntry:
+              TableEntry tableEntry = entry as TableEntry;
+              return EntryListTableWidget(tableEntry);
+          }
+        },
+      );
     } else {
       return SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -39,127 +43,69 @@ class EntryListWidget extends StatelessWidget {
   }
 
   Column buildTables(List<Entry> entries, BuildContext context) {
-    Map<String, List<Entry>> grouped = {};
-    String day = "";
+    Map<String, List<TableEntry>> grouped = {};
+    String dayName = "";
     for (Entry entry in entries) {
-      switch (entry.getType()) {
-        case EntryType.titleDay:
-          TitleEntry titleEntry = entry as TitleEntry;
-          day = titleEntry.title;
-          break;
-        case EntryType.tableEntry:
-          TableEntry tableEntry = entry as TableEntry;
-          grouped.putIfAbsent(day, () => [tableEntry]);
-          if (grouped.containsKey(day)) {
-            grouped[day]?.add(tableEntry);
-          }
-          break;
-        case EntryType.infoEntry:
-          InfoEntry infoEntry = entry as InfoEntry;
-          grouped.putIfAbsent(day, () => [infoEntry]);
-          if (grouped.containsKey(day)) {
-            grouped[day]?.add(infoEntry);
-          }
-          break;
+      if (entry.getType() == EntryType.titleDay) {
+        TitleEntry titleEntry = entry as TitleEntry;
+        dayName = titleEntry.title;
+      } else {
+        TableEntry tableEntry = entry as TableEntry;
+        if (grouped.containsKey(dayName)) {
+          grouped[dayName]?.add(tableEntry);
+        } else {
+          grouped.putIfAbsent(dayName, () => [tableEntry]);
+        }
       }
     }
 
     List<Widget> content = [];
     for (String day in grouped.keys) {
-      content.add(
-          Padding(
-            padding: const EdgeInsets.only(
-                right: 16,
-                left: 16,
-                top: 24
-            ),
-            child: Text(
-              day,
-              style: Theme.of(context).textTheme.headline5
-            ),
-          )
-      );
-       content.add(
-           Column(
-             crossAxisAlignment: CrossAxisAlignment.stretch,
-             children: [
-               DataTable(
-                 columns: const <DataColumn>[
-                   DataColumn(label: Text("Zeit")),
-                   DataColumn(label: Text("Veranstaltung")),
-                   DataColumn(label: Text("Modul")),
-                   DataColumn(label: Text("Dozent")),
-                   DataColumn(label: Text("Raum")),
-                 ],
-                 rows: buildRows(grouped[day] ?? []),
-               ),
-             ],
-           )
-       );
+      content.add(Padding(
+        padding: const EdgeInsets.only(right: 16, left: 16, top: 24),
+        child: Text(day, style: Theme.of(context).textTheme.headline5),
+      ));
+      content.add(Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          DataTable(
+            columns: const <DataColumn>[
+              DataColumn(label: Text("Zeit")),
+              DataColumn(label: Text("Veranstaltung")),
+              DataColumn(label: Text("Modul")),
+              DataColumn(label: Text("Dozent")),
+              DataColumn(label: Text("Raum")),
+            ],
+            rows: buildRows(grouped[day] ?? []),
+          ),
+        ],
+      ));
     }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-
       children: content,
     );
   }
 
-  List<DataRow> buildRows(List<Entry> entries) {
+  List<DataRow> buildRows(List<TableEntry> entries) {
     List<DataRow> rows = [];
 
-    for (Entry entry in entries) {
-      switch (entry.getType()) {
-        case EntryType.tableEntry:
-          TableEntry tableEntry = entry as TableEntry;
-          rows.add(
-            DataRow(
-              cells: <DataCell>[
-                DataCell(ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    minWidth: 100
-                  ),
-                  child: Text(tableEntry.time.replaceAll("\n", ""),
-                      maxLines: 2),
-                )),
-                DataCell(Text(tableEntry.type)),
-                DataCell(Text(tableEntry.module)),
-                DataCell(Text(tableEntry.teacher)),
-                DataCell(Text(tableEntry.room)),
-              ],
-            ),
-          );
-          break;
-        case EntryType.infoEntry:
-          InfoEntry infoEntry = entry as InfoEntry;
-          rows.add(
-            DataRow(
-              cells: <DataCell>[
-                DataCell(Text(infoEntry.info)),
-                const DataCell(Text("")),
-                const DataCell(Text("")),
-                const DataCell(Text("")),
-                const DataCell(Text("")),
-              ],
-            ),
-          );
-          break;
-        case EntryType.titleDay:
-          // should not be called
-          TitleEntry titleEntry = entry as TitleEntry;
-          rows.add(
-            DataRow(
-              cells: <DataCell>[
-                DataCell(Text(titleEntry.title)),
-                const DataCell(Text("")),
-                const DataCell(Text("")),
-                const DataCell(Text("")),
-                const DataCell(Text("")),
-              ],
-            ),
-          );
-          break;
-      }
+    for (TableEntry entry in entries) {
+      rows.add(
+        DataRow(
+          cells: <DataCell>[
+            DataCell(ConstrainedBox(
+              constraints: const BoxConstraints(minWidth: 100),
+              child: Text(entry.time.replaceAll("\n", ""), maxLines: 2),
+            )),
+            DataCell(Text(entry.type)),
+            DataCell(Text(entry.module)),
+            DataCell(Text(entry.teacher)),
+            DataCell(Text(entry.room)),
+          ],
+        ),
+      );
     }
 
     return rows;
