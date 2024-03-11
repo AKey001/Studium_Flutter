@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:responsive_framework/responsive_breakpoints.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:studium/commons/providers/modules_list_provider.dart';
 import 'package:studium/modules/models/models.dart';
 import 'package:studium/modules/widgets/update_module_dialog.dart';

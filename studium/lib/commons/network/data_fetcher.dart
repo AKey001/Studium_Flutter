@@ -14,11 +14,10 @@ Future<http.Response> fetchActivities(
   Map<String, dynamic> dataSemester = parsedSemester.first;
   String semesterId = dataSemester["id"];
 
-
   // get Class
   Uri uriMatrikel = Uri.https(
       "timetable.hszg.de",
-      "/api/v1/semesters/4710ec988190a39/classes",
+      "/api/v1/semesters/$semesterId/classes",
       {
         'query': matrikel,
       });
